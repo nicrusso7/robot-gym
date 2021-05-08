@@ -103,4 +103,4 @@ if __name__ == '__main__':
     }
     env = gym.make("GoTo-v0", **args)
     # train(env, "ddpg_1", steps=100000, pretrained_path=None)
-    test(env, "/home/seven/dev/test/goto_ddpg/20210321T005319-go/last_weights.h5f")
+    test(env, "last_weights.h5f")
