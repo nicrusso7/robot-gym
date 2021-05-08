@@ -1,0 +1,42 @@
+!!python/object/new:robot_gym.agents.ppo.tools.attr_dict.AttrDict
+dictitems:
+  algorithm: !!python/name:robot_gym.agents.ppo.algorithm.PPOAlgorithm ''
+  discount: 0.985
+  env: !!python/object/apply:functools.partial
+    args:
+      - &id001 !!python/name:robot_gym.gym.envs.go_to.go_env.GoEnv ''
+    state: !!python/tuple
+      - *id001
+      - !!python/tuple [ ]
+      - render: true
+      - null
+  eval_episodes: 10
+  init_logstd: -1
+  init_mean_factor: 0.05
+  kl_cutoff_coef: 1000
+  kl_cutoff_factor: 2
+  kl_init_penalty: 1
+  kl_target: 0.01
+  logdir: /home/seven/dev/test/go_to_ppo/20210310T012936-go
+  max_length: 1500
+  network: !!python/name:robot_gym.agents.ppo.scripts.networks.ForwardGaussianPolicy ''
+  num_agents: 5
+  policy_layers: &id001 !!python/tuple
+  - 200
+  - 100
+  policy_lr: 0.0001
+  policy_optimizer: AdamOptimizer
+  steps: 4000000.0
+  update_epochs_policy: 50
+  update_epochs_value: 50
+  update_every: 25
+  use_gpu: false
+  value_layers: *id001
+  value_lr: 0.0003
+  value_optimizer: AdamOptimizer
+  weight_summaries:
+    all: .*
+    policy: .*/policy/.*
+    value: .*/value/.*
+state:
+  _mutable: false
