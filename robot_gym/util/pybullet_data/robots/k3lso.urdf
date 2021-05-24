@@ -23,7 +23,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="k3lso/base_link.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/base_link.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -43,7 +43,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="-0.1845 0.055 0.000895"/>
       <geometry>
-        <mesh filename="k3lso/abduct_fr_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/abduct_fr_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -56,14 +56,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.24242 0.086937 0.001261"/>
       <geometry>
-        <mesh filename="k3lso/thigh_hr_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/thigh_hr_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.24242 0.086937 0.001261"/>
       <geometry>
-        <mesh filename="k3lso/thigh_hr_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/thigh_hr_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -76,14 +76,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.242534 0.188457 0.281146"/>
       <geometry>
-        <mesh filename="k3lso/shank_hl_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/shank_hl_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.242534 0.188457 0.281146"/>
       <geometry>
-        <mesh filename="k3lso/shank_hl_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/shank_hl_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -96,14 +96,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.244786 0.170757 0.553397"/>
       <geometry>
-        <mesh filename="k3lso/toe_hr_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/toe_hr_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.244786 0.170757 0.553397"/>
       <geometry>
-        <mesh filename="k3lso/toe_hr_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/toe_hr_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -116,14 +116,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.1873 -0.055 0.000895"/>
       <geometry>
-        <mesh filename="k3lso/abduct_fl_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/abduct_fl_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.1873 -0.055 0.000895"/>
       <geometry>
-        <mesh filename="k3lso/abduct_fl_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/abduct_fl_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -136,14 +136,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.24522 -0.086937 0.001261"/>
       <geometry>
-        <mesh filename="k3lso/thigh_hl_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/thigh_hl_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.24522 -0.086937 0.001261"/>
       <geometry>
-        <mesh filename="k3lso/thigh_hl_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/thigh_hl_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -156,14 +156,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.244306 -0.188457 0.280011"/>
       <geometry>
-        <mesh filename="k3lso/shank_hl_2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/shank_hl_2.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.244306 -0.188457 0.280011"/>
       <geometry>
-        <mesh filename="k3lso/shank_hl_2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/shank_hl_2.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -176,14 +176,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.246558 -0.170757 0.552262"/>
       <geometry>
-        <mesh filename="k3lso/toe_hr_2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/toe_hr_2.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.246558 -0.170757 0.552262"/>
       <geometry>
-        <mesh filename="k3lso/toe_hr_2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/toe_hr_2.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -196,14 +196,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.1873 0.055 0.000895"/>
       <geometry>
-        <mesh filename="k3lso/abduct_hr_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/abduct_hr_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.1873 0.055 0.000895"/>
       <geometry>
-        <mesh filename="k3lso/abduct_hr_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/abduct_hr_1.obj/" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -216,14 +216,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.24522 0.086937 0.001261"/>
       <geometry>
-        <mesh filename="k3lso/thigh_hr_2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/thigh_hr_2.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.24522 0.086937 0.001261"/>
       <geometry>
-        <mesh filename="k3lso/thigh_hr_2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/thigh_hr_2.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -236,14 +236,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.245105 0.188457 0.281146"/>
       <geometry>
-        <mesh filename="k3lso/shank_hl_3.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/shank_hl_3.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.245105 0.188457 0.281146"/>
       <geometry>
-        <mesh filename="k3lso/shank_hl_3.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/shank_hl_3.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -256,14 +256,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.242854 0.170757 0.553397"/>
       <geometry>
-        <mesh filename="k3lso/toe_hr_3.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/toe_hr_3.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.242854 0.170757 0.553397"/>
       <geometry>
-        <mesh filename="k3lso/toe_hr_3.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/toe_hr_3.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -276,14 +276,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.1873 -0.055 0.000895"/>
       <geometry>
-        <mesh filename="k3lso/abduct_hl_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/abduct_hl_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.1873 -0.055 0.000895"/>
       <geometry>
-        <mesh filename="k3lso/abduct_hl_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/abduct_hl_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -296,14 +296,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.24522 -0.086937 0.001261"/>
       <geometry>
-        <mesh filename="k3lso/thigh_hl_2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/thigh_hl_2.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.24522 -0.086937 0.001261"/>
       <geometry>
-        <mesh filename="k3lso/thigh_hl_2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/thigh_hl_2.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -316,14 +316,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.246133 -0.188457 0.280011"/>
       <geometry>
-        <mesh filename="k3lso/shank_hl_4.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/shank_hl_4.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.246133 -0.188457 0.280011"/>
       <geometry>
-        <mesh filename="k3lso/shank_hl_4.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/shank_hl_4.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -336,14 +336,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.243882 -0.170757 0.552262"/>
       <geometry>
-        <mesh filename="k3lso/toe_hr_4.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/toe_hr_4.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.243882 -0.170757 0.552262"/>
       <geometry>
-        <mesh filename="k3lso/toe_hr_4.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/toe_hr_4.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
