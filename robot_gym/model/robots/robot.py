@@ -1,12 +1,10 @@
 import numpy as np
 
-from gibson2.robots.robot_locomotor import LocomotorRobot
-
 from robot_gym.model.equipment import camera
 from robot_gym.util import pybullet_data
 
 
-class Robot(LocomotorRobot):
+class Robot:
 
     def __init__(self,
                  pybullet_client,
