@@ -1,10 +1,12 @@
 import numpy as np
 
+from gibson2.robots.robot_locomotor import LocomotorRobot
+
 from robot_gym.model.equipment import camera
 from robot_gym.util import pybullet_data
 
 
-class Robot:
+class Robot(LocomotorRobot):
 
     def __init__(self,
                  pybullet_client,
@@ -61,6 +63,12 @@ class Robot:
     @property
     def equipment(self):
         return self._equip
+
+    def set_up_discrete_action_space(self):
+        pass
+
+    def set_up_continuous_action_space(self):
+        pass
 
     def GetBasePosition(self):
         """Get the position of Rex's base.

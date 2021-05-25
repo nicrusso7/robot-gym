@@ -19,25 +19,16 @@ class Simulation:
                  record_video=False,
                  render=False,
                  debug=False,
-                 pybullet_client=None):
+                 pybullet_client=None,
+                 sim_mode="classic"):
 
-        self._step_counter = 0
-        self._state_action_counter = 0
-        self._is_render = render
-        self._robot_model = robot_model
-        self._mark = mark
-        self._env_time_step = sim_constants.ACTION_REPEAT * sim_constants.SIMULATION_TIME_STEP
+        self._sim_mode = sim_mode
+        if self._sim_mode == "classic":
+            self._init_classic_mode(robot_model, mark, controller_class, terrain_id, terrain_type,
+                                    record_video, render, debug, pybullet_client)
+        else:
+            self._init_gibson_mode()
 
-        # create pybullet client
-        self._pybullet_client = self._StartSimulation(record_video,
-                                                      sim_constants.NUM_BULLET_SOLVER_ITERATIONS,
-                                                      sim_constants.SIMULATION_TIME_STEP,
-                                                      pybullet_client)
-
-        self.build_world(controller_class, terrain_id, terrain_type)
-
-        self._pybullet_client.configureDebugVisualizer(self._pybullet_client.COV_ENABLE_RENDERING, debug)
-        self._pybullet_client.configureDebugVisualizer(self._pybullet_client.COV_ENABLE_GUI, debug)
 
     @property
     def pybullet_client(self):
@@ -66,6 +57,37 @@ class Simulation:
     @property
     def env_time_step(self):
         return self._env_time_step
+
+    def _init_classic_mode(self,
+                           robot_model,
+                           mark,
+                           controller_class,
+                           terrain_id=None,
+                           terrain_type='plane',
+                           record_video=False,
+                           render=False,
+                           debug=False,
+                           pybullet_client=None, ):
+        self._step_counter = 0
+        self._state_action_counter = 0
+        self._is_render = render
+        self._robot_model = robot_model
+        self._mark = mark
+        self._env_time_step = sim_constants.ACTION_REPEAT * sim_constants.SIMULATION_TIME_STEP
+
+        # create pybullet client
+        self._pybullet_client = self._StartSimulation(record_video,
+                                                      sim_constants.NUM_BULLET_SOLVER_ITERATIONS,
+                                                      sim_constants.SIMULATION_TIME_STEP,
+                                                      pybullet_client)
+
+        self.build_world(controller_class, terrain_id, terrain_type)
+
+        self._pybullet_client.configureDebugVisualizer(self._pybullet_client.COV_ENABLE_RENDERING, debug)
+        self._pybullet_client.configureDebugVisualizer(self._pybullet_client.COV_ENABLE_GUI, debug)
+
+    def _init_gibson_mode(self):
+        pass
 
     def _StartSimulation(self, record_video, num_bullet_solver_iterations, simulation_time_step, pybullet_client=None):
         if pybullet_client is None:

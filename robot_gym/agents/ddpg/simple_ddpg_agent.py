@@ -22,7 +22,7 @@ import gym
 # Number of past subsequent observations to take as input
 from robot_gym.agents.ddpg.keras_rl_agent import DDPGAgent
 from robot_gym.controllers.mpc import mpc_controller
-from robot_gym.model.robots.rex import rex
+from robot_gym.model.robots.ghost import ghost
 
 window_length = 5
 
@@ -70,8 +70,9 @@ def build_agent(env):
 def train(env, dir_name, steps=25000, pretrained_path=None):
     agent = build_agent(env)
     # Load pre-trained weights optionally
-    if pretrained_path is not None:
-        agent.load_weights(pretrained_path)
+    # if pretrained_path is not None:
+    #     agent.load_weights(pretrained_path)
+    agent.load_weights("/home/nic/dev/robotics/playground/ddpg_vxwz2/20210522T203333-go/checkpoints/chkpt_6000000.h5f")
 
     save_path = os.path.join("models", dir_name)
     os.makedirs(save_path, exist_ok=False)
@@ -94,7 +95,7 @@ def test(env, path):
 
 if __name__ == '__main__':
     args = {
-        "robot_model": rex.Rex,
+        "robot_model": ghost.Ghost,
         "mark": "1",
         "controller_class": mpc_controller.MPCController,
         "debug": True,
@@ -103,4 +104,4 @@ if __name__ == '__main__':
     }
     env = gym.make("GoTo-v0", **args)
     # train(env, "ddpg_1", steps=100000, pretrained_path=None)
-    test(env, "last_weights.h5f")
+    test(env, "/home/nic/dev/robotics/playground/ddpg_vxwz2/20210522T203333-go/checkpoints/chkpt_6000000.h5f")

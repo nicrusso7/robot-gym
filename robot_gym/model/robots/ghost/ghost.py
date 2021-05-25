@@ -1,8 +1,8 @@
-from robot_gym.model.robots.rex import constants, marks, motor_constants
+from robot_gym.model.robots.ghost import constants, marks, motor_constants
 from robot_gym.model.robots.robot import Robot
 
 
-class Rex(Robot):
+class Ghost(Robot):
 
     @classmethod
     def GetMotorClass(cls):

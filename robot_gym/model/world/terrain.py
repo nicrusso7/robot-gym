@@ -120,15 +120,15 @@ class Terrain:
     def setup_ui_params(pybullet_client):
         plane = pybullet_client.addUserDebugParameter("Plane", 0, -1, 0)
         heightfield = pybullet_client.addUserDebugParameter("Heightfield", 0, -1, 0)
-        update_heightfield = pybullet_client.addUserDebugParameter("Change heightfield", 0, -1, 0)
-        maze = pybullet_client.addUserDebugParameter("Maze", 0, -1, 0)
+        # update_heightfield = pybullet_client.addUserDebugParameter("Change heightfield", 0, -1, 0)
+        # maze = pybullet_client.addUserDebugParameter("Maze", 0, -1, 0)
         valley = pybullet_client.addUserDebugParameter("Valley", 0, -1, 0)
         hills = pybullet_client.addUserDebugParameter("Hills", 0, -1, 0)
         ui = {
             "plane": plane,
             "heightfield": heightfield,
-            "update_heightfield": update_heightfield,
-            "maze": maze,
+            # "update_heightfield": update_heightfield,
+            # "maze": maze,
             "valley": valley,
             "hills": hills
         }
@@ -146,12 +146,12 @@ class Terrain:
             terrain_type = "random"
             terrain_id = None
             reset_sim = True
-        elif pybullet_client.readUserDebugParameter(ui["update_heightfield"]):
-            self.update_terrain()
-        elif pybullet_client.readUserDebugParameter(ui["maze"]):
-            terrain_type = "png"
-            terrain_id = "maze"
-            reset_sim = True
+        # elif pybullet_client.readUserDebugParameter(ui["update_heightfield"]):
+        #     self.update_terrain()
+        # elif pybullet_client.readUserDebugParameter(ui["maze"]):
+        #     terrain_type = "png"
+        #     terrain_id = "maze"
+        #     reset_sim = True
         elif pybullet_client.readUserDebugParameter(ui["valley"]):
             terrain_type = "png"
             terrain_id = "valley"

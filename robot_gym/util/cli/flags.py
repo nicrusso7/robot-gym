@@ -16,6 +16,6 @@ TERRAIN_TYPE = {
 
 SUPPORTED_CONTROLLERS = ['mpc']
 
-SUPPORTED_ROBOTS = ['rex']
+SUPPORTED_ROBOTS = ['ghost']
 
 SUPPORTED_AGENTS = ['ppo', 'ddpg']

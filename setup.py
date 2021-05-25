@@ -32,8 +32,7 @@ setup(
         robot-gym=robot_gym.cli.entry_point:cli
     ''',
     include_package_data=True,
-    keywords=['openai', 'gym', 'robotics', 'quadruped', 'pybullet', 'reinforcement learning', 'machine learning',
-              'RL', 'ML', 'AI', 'tensorflow'],
+    keywords=['openai', 'gym', 'robotics', 'quadruped', 'pybullet', 'RL', 'ML', 'AI', 'tensorflow'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
