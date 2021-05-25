@@ -4,7 +4,7 @@ MARK_PARAMS = {
     '1': {
         'num_motors': 12,
         'num_legs': 4,
-        'urdf_name': "robots/rex.urdf",
+        'urdf_name': "robots/ghost.urdf",
         'motor_names': [
             "FR_hip_joint",
             "FR_upper_joint",

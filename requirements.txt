@@ -1,7 +1,8 @@
-numpy==1.17.3
+numpy==1.20.3
 pybullet>=3.0.6
 gym==0.17.1
-tensorflow==1.15.5
+tensorflow==1.15.3
+tensorflow-probability==0.7.0
 ruamel.yaml
 click
 motion_imitation==0.0.5
@@ -9,3 +10,4 @@ keras==2.3.1
 keras-rl==0.4.2
 shapely
 inputs
+gibson2

@@ -13,7 +13,7 @@ def cli():
               type=click.Choice([e for e in flags.ENV_ID_TO_ENV.keys()], case_sensitive=True))
 @click.option('--param', '-p', type=(str, float), help="The Environment's param(s).", multiple=True)
 @click.option('--flag', '-f', type=(str, bool), help="The Environment's flag(s).", multiple=True)
-@click.option('--robot', '-r', default="rex", help="The robot you want to use.",
+@click.option('--robot', '-r', default="ghost", help="The robot you want to use.",
               type=click.Choice(flags.SUPPORTED_ROBOTS))
 @click.option('--controller', '-c', default="mpc", help="The locomotion controller you want to use.",
               type=click.Choice(flags.SUPPORTED_CONTROLLERS))
@@ -39,14 +39,14 @@ def policy(env, param, flag, robot, controller, terrain, mark, agent):
 @click.option('--log-dir', '-log', '-l', required=True, help="The path where the log directory will be created.")
 @click.option('--debug', '-d', type=bool, default=False, help="Demo: 1 agent, render enabled.")
 @click.option('--num-agents', '-n', type=int, default=None, help="Set the number of parallel agents.")
-@click.option('--robot', '-r', default="rex", help="The robot you want to use.",
+@click.option('--robot', '-r', default="ghost", help="The robot you want to use.",
               type=click.Choice(flags.SUPPORTED_ROBOTS))
 @click.option('--controller', '-c', default="mpc", help="The locomotion controller you want to use.",
               type=click.Choice(flags.SUPPORTED_CONTROLLERS))
 @click.option('--terrain', '-t', default="plane", help="Set the simulation terrain.",
               type=click.Choice([t for t in flags.TERRAIN_TYPE.keys()]))
 @click.option('--mark', '-m', default="1", help="Set the robot mark (version).")
-@click.option('--agent', '-a', default="ppo", help="The agent you want to use.",
+@click.option('--agent', '-a', default="ddpg", help="The agent you want to use.",
               type=click.Choice(flags.SUPPORTED_AGENTS))
 def train(env, param, flag, log_dir, debug, num_agents, robot, controller, terrain, mark, agent):
     # import locally the Trainer to avoid the pyBullet loading at every cli command
@@ -58,17 +58,18 @@ def train(env, param, flag, log_dir, debug, num_agents, robot, controller, terra
 
 
 @cli.command()
-@click.option('--robot', '-r', default="rex", help="The robot you want to use.",
+@click.option('--robot', '-r', default="ghost", help="The robot you want to use.",
               type=click.Choice(flags.SUPPORTED_ROBOTS))
 @click.option('--mark', '-m', default="1", help="Set the robot mark (version).")
 @click.option('--record-video', '-rec', type=bool, default=False, help="Record a video clip (mp4).")
 @click.option('--gamepad', '-pad', '-g', type=bool, default=False, help="Control the robot using a gamepad.")
-def playground(robot, mark, record_video):
+def playground(robot, mark, record_video, gamepad):
     from robot_gym.playground.playground import Playground
     from robot_gym.util.cli import mapper
     args = _parse_mark(mark)
     args["robot_model"] = mapper.ROBOTS[robot]
     args["record_video"] = record_video
+    args["gamepad"] = gamepad
     Playground(**args).run()
 
 

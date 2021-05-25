@@ -20,13 +20,13 @@ class GoEnv(robot_gym_env.RobotGymEnv):
     "points_latch" - returns flattened array shape (2 * num_cam_pts,) if at least 2 line points
         are visible in camera window, otherwise returns previous observation
 
-    The gym environment for the rex.
+    The gym environment for the ghost.
 
-    It simulates the locomotion of a rex, a quadruped robot. The state space
+    It simulates the locomotion of a ghost, a quadruped robot. The state space
     include the angles, velocities and torques for all the motors and the action
     space is the desired motor angle for each motor. The reward function is based
-    on how far the rex walks in 2000 steps and penalizes the energy
-    expenditure or how near rex is to the target position.
+    on how far the ghost walks in 2000 steps and penalizes the energy
+    expenditure or how near ghost is to the target position.
 
     """
 
@@ -49,8 +49,8 @@ class GoEnv(robot_gym_env.RobotGymEnv):
         Initialize the Walk To gym environment.
 
         Args:
-          on_rack: Whether to place the rex on rack. This is only used to debug
-            the walk gait. In this mode, the rex's base is hung midair so
+          on_rack: Whether to place the ghost on rack. This is only used to debug
+            the walk gait. In this mode, the ghost's base is hung midair so
             that its walk gait is clearer to visualize.
           render: Whether to render the simulation.
         """
@@ -99,8 +99,8 @@ class GoEnv(robot_gym_env.RobotGymEnv):
             self._build_world(True)
 
     def _build_action_space(self):
-        self.action_space = spaces.Box(low=np.array([-0.4]),
-                                       high=np.array([0.4]), dtype=np.float32)
+        self.action_space = spaces.Box(low=np.array([0.0, -0.4]),
+                                       high=np.array([0.35, 0.4]))
 
     def _build_observation_space(self):
         self.observation_space = spaces.Box(low=np.array([0.0, -0.2] * self._num_cam_pts),
@@ -273,9 +273,14 @@ class GoEnv(robot_gym_env.RobotGymEnv):
         if self._debug and not self.simulation.read_ui_parameters(self._ui) and not self._policy:
             # overwrite agent action with UI input
             action = self._read_inputs()
-            # update cameras position (if any)
 
-        if self.parse_equipment_ui_params():
+        # if we are using the agent feedback
+        if self._debug and (self.simulation.read_ui_parameters(self._ui) or self._policy):
+            # then clip the action
+            action = max(0, min(action[0], 0.35)), max(-0.4, min(action[1], 0.4))
+
+        # update cameras position (if any)
+        if self._debug and self.parse_equipment_ui_params():
             # update follower cam
             pos_x, pos_y = self._follower.cam_pos_point.get_xy()
             target_x, target_y = self._follower.cam_target_point.get_xy()
@@ -283,10 +288,6 @@ class GoEnv(robot_gym_env.RobotGymEnv):
             self.simulation.robot.get_default_camera().target = target_x, target_y, 0.0
             kwargs = {"update_equip": True}
 
-        if not isinstance(action, tuple):
-            action = (0.3, action)
-
-        # print(action)
         if self._on_target():
             action = self.simulation.controller.get_standing_action()
 
