@@ -70,9 +70,8 @@ def build_agent(env):
 def train(env, dir_name, steps=25000, pretrained_path=None):
     agent = build_agent(env)
     # Load pre-trained weights optionally
-    # if pretrained_path is not None:
-    #     agent.load_weights(pretrained_path)
-    agent.load_weights("/home/nic/dev/robotics/playground/ddpg_vxwz2/20210522T203333-go/checkpoints/chkpt_6000000.h5f")
+    if pretrained_path is not None:
+        agent.load_weights(pretrained_path)
 
     save_path = os.path.join("models", dir_name)
     os.makedirs(save_path, exist_ok=False)
