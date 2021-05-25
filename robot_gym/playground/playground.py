@@ -7,6 +7,7 @@ from robot_gym.controllers.mpc import mpc_controller
 from robot_gym.core.simulation import Simulation
 from robot_gym.io.gamepad import xbox_one_pad
 from robot_gym.model.robots.ghost import ghost
+from robot_gym.model.robots.k3lso import k3lso
 
 
 class Playground:
@@ -152,5 +153,5 @@ class Playground:
 
 
 if __name__ == "__main__":
-    playground = Playground(ghost.Ghost, "1", False)
+    playground = Playground(k3lso.K3lso, "1", False)
     playground.run()

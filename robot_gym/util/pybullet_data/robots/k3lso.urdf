@@ -203,7 +203,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0.1873 0.055 0.000895"/>
       <geometry>
-        <mesh filename="k3lso/obj/abduct_hr_1.obj/" scale="0.001 0.001 0.001"/>
+        <mesh filename="k3lso/obj/abduct_hr_1.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -365,7 +365,7 @@
     <child link="shank_hl_1"/>
     <axis xyz="-0.0 1.0 0.0"/>
   </joint>
-  <joint name="toe_fr_joint" type="fixed">
+  <joint name="fr_joint_toe" type="fixed">
     <origin rpy="0 0 0" xyz="0.002252 0.0177 -0.272251"/>
     <parent link="shank_hl_1"/>
     <child link="toe_hr_1"/>
@@ -388,7 +388,7 @@
     <child link="shank_hl_2"/>
     <axis xyz="-0.0 -1.0 -0.0"/>
   </joint>
-  <joint name="toe_fl_joint" type="fixed">
+  <joint name="fl_joint_toe" type="fixed">
     <origin rpy="0 0 0" xyz="0.002252 -0.0177 -0.272251"/>
     <parent link="shank_hl_2"/>
     <child link="toe_hr_2"/>
@@ -411,7 +411,7 @@
     <child link="shank_hl_3"/>
     <axis xyz="-0.0 1.0 0.0"/>
   </joint>
-  <joint name="toe_hr_joint" type="fixed">
+  <joint name="hr_joint_toe" type="fixed">
     <origin rpy="0 0 0" xyz="0.002251 0.0177 -0.272251"/>
     <parent link="shank_hl_3"/>
     <child link="toe_hr_3"/>
@@ -434,7 +434,7 @@
     <child link="shank_hl_4"/>
     <axis xyz="-0.0 -1.0 -0.0"/>
   </joint>
-  <joint name="toe_hl_joint" type="fixed">
+  <joint name="hl_joint_toe" type="fixed">
     <origin rpy="0 0 0" xyz="0.002251 -0.0177 -0.272251"/>
     <parent link="shank_hl_4"/>
     <child link="toe_hr_4"/>

@@ -110,7 +110,7 @@ class Simulation:
         self._robot = self._robot_model(pybullet_client=self._pybullet_client,
                                         mark=self._mark,
                                         simulation=self,
-                                        motor_control_mode=controller_class.get_constants().MOTOR_CONTROL_MODE,
+                                        motor_control_mode=controller_class.MOTOR_CONTROL_MODE,
                                         z_offset=z_offset)
 
         # setup locomotion controller
@@ -175,7 +175,7 @@ class Simulation:
     def ApplyStepAction(self, action):
         """ Steps simulation. """
         for i in range(sim_constants.ACTION_REPEAT):
-            self._StepInternal(action, self.controller.get_constants().MOTOR_CONTROL_MODE)
+            self._StepInternal(action, self.controller.MOTOR_CONTROL_MODE)
             self._step_counter += 1
 
     def SettleRobotDownForReset(self, reset_time):

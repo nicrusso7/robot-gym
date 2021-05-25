@@ -7,14 +7,17 @@ from mpc_controller import openloop_gait_generator, com_velocity_estimator, raib
     torque_stance_leg_controller, locomotion_controller
 
 from robot_gym.controllers.controller import Controller
-from robot_gym.controllers.mpc import constants
 from robot_gym.controllers.mpc.kinematics import Kinematics
+from robot_gym.model.robots import simple_motor
 
 
 class MPCController(Controller):
 
+    MOTOR_CONTROL_MODE = simple_motor.MOTOR_CONTROL_HYBRID
+
     def __init__(self, robot, get_time_since_reset):
         super(MPCController, self).__init__(robot, get_time_since_reset)
+        self._constants = robot.GetCtrlConstants()
         self._mpc_controller = self._setup_controller(self._robot)
         self._kinematics = Kinematics(self._robot)
 
@@ -22,19 +25,14 @@ class MPCController(Controller):
     def kinematics_model(self):
         return self._kinematics
 
-    @classmethod
-    def get_constants(cls):
-        del cls
-        return constants
-
     def _setup_controller(self, robot, desired_speed=(0.0, 0.0), desired_twisting_speed=0.0):
         """ Build the MPC controller. """
         gait_generator = openloop_gait_generator.OpenloopGaitGenerator(
             robot,
-            stance_duration=constants.STANCE_DURATION_SECONDS,
-            duty_factor=constants.DUTY_FACTOR,
-            initial_leg_phase=constants.INIT_PHASE_FULL_CYCLE,
-            initial_leg_state=constants.INIT_LEG_STATE)
+            stance_duration=self._constants.STANCE_DURATION_SECONDS,
+            duty_factor=self._constants.DUTY_FACTOR,
+            initial_leg_phase=self._constants.INIT_PHASE_FULL_CYCLE,
+            initial_leg_state=self._constants.INIT_LEG_STATE)
         state_estimator = com_velocity_estimator.COMVelocityEstimator(robot, window_size=20)
 
         sw_controller = raibert_swing_leg_controller.RaibertSwingLegController(
@@ -43,7 +41,7 @@ class MPCController(Controller):
             state_estimator,
             desired_speed=desired_speed,
             desired_twisting_speed=desired_twisting_speed,
-            desired_height=constants.MPC_BODY_HEIGHT,
+            desired_height=self._constants.MPC_BODY_HEIGHT,
             foot_clearance=0.01)
 
         st_controller = torque_stance_leg_controller.TorqueStanceLegController(
@@ -52,9 +50,9 @@ class MPCController(Controller):
             state_estimator,
             desired_speed=desired_speed,
             desired_twisting_speed=desired_twisting_speed,
-            desired_body_height=constants.MPC_BODY_HEIGHT,
-            body_mass=constants.MPC_BODY_MASS,
-            body_inertia=constants.MPC_BODY_INERTIA
+            desired_body_height=self._constants.MPC_BODY_HEIGHT,
+            body_mass=self._constants.MPC_BODY_MASS,
+            body_inertia=self._constants.MPC_BODY_INERTIA
         )
 
         controller = locomotion_controller.LocomotionController(
@@ -90,11 +88,11 @@ class MPCController(Controller):
             vx, vy, wz = params
         # add robot ctrl offset
         lin_speed = [
-            vx + constants.VX_OFFSET,
-            vy + constants.VY_OFFSET,
+            vx + self._constants.VX_OFFSET,
+            vy + self._constants.VY_OFFSET,
             0.
         ]
-        ang_speed = wz + constants.WZ_OFFSET
+        ang_speed = wz + self._constants.WZ_OFFSET
         # update ctrl params
         self._mpc_controller.swing_leg_controller.desired_speed = lin_speed
         self._mpc_controller.swing_leg_controller.desired_twisting_speed = ang_speed
