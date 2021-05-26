@@ -6,7 +6,7 @@ START_POS = [0, 0, 0.48]
 INIT_ORIENTATION = [0, 0, 0]
 
 DEFAULT_ABDUCTION_ANGLE = 0
-DEFAULT_HIP_ANGLE = 0.67
+DEFAULT_HIP_ANGLE = 0.5
 DEFAULT_KNEE_ANGLE = -1.25
 
 INIT_MOTOR_ANGLES = np.array(
@@ -20,20 +20,20 @@ INIT_MOTOR_ANGLES = np.array(
 IDENTITY_ORIENTATION = [0, 0, 0, 1]
 
 CHASSIS_NAME_PATTERN = re.compile(r"\w+body\w+")
-HIP_NAME_PATTERN = re.compile(r"\w+_to_abduct_\w+")
-UPPER_NAME_PATTERN = re.compile(r"\w+_to_thigh_\w+")
-LOWER_NAME_PATTERN = re.compile(r"\w+_to_knee_\w+")
+HIP_NAME_PATTERN = re.compile(r"\w+_hip_\w+")
+UPPER_NAME_PATTERN = re.compile(r"\w+_upper_\w+")
+LOWER_NAME_PATTERN = re.compile(r"\w+_lower_\w+")
 TOE_NAME_PATTERN = re.compile(r"\w+_toe\d*")
 
-HIP_JOINTS_PATTERN = "to_abduct"
-UPPER_JOINTS_PATTERN = "to_thigh"
-LOWER_JOINTS_PATTERN = "to_knee"
+HIP_JOINTS_PATTERN = "hip_joint"
+UPPER_JOINTS_PATTERN = "upper_joint"
+LOWER_JOINTS_PATTERN = "lower_joint"
 
 DEFAULT_HIP_POSITIONS = (
-    (0.22, -0.1, 0),
     (0.22, 0.1, 0),
-    (-0.22, -0.1, 0),
-    (-0.22, 0.1, 0),
+    (0.22, 0.1, 0),
+    (0.22, 0.1, 0),
+    (0.22, 0.1, 0),
 )
 
 BODY_B_FIELD_NUMBER = 2

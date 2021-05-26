@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<robot name="k3lso">
+<robot name="k3lso_robot">
   <material name="silver_default">
     <color rgba="0.700 0.700 0.700 1.000"/>
   </material>
@@ -348,6 +348,8 @@
     <parent link="base_link"/>
     <child link="FR_hip_1"/>
     <axis xyz="1.0 0.0 -0.0"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="FR_upper_joint" type="continuous">
     <origin rpy="0 0 0" xyz="0.05792 -0.031938 0.000192"/>
