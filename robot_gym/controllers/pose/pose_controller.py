@@ -89,8 +89,8 @@ class PoseController(Controller):
         #                         [t_rear_left[0], t_rear_left[1], t_rear_left[2]]])
         signal = [
             front_right_angles[0], front_right_angles[1], front_right_angles[2],
-            front_left_angles[0], front_left_angles[1], front_left_angles[2],
-            rear_right_angles[0], rear_right_angles[1], rear_right_angles[2],
-            rear_left_angles[0], rear_left_angles[1], rear_left_angles[2]
+            front_left_angles[0], front_left_angles[1], -front_left_angles[2],
+            rear_right_angles[0], -rear_right_angles[1], rear_right_angles[2],
+            rear_left_angles[0], -rear_left_angles[1], -rear_left_angles[2]
         ]
         return signal
