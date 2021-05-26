@@ -1,23 +1,22 @@
 import numpy as np
 from robot_gym.controllers.controller import Controller
-from robot_gym.controllers.pose import constants, kinematics
+from robot_gym.controllers.pose import kinematics
+from robot_gym.model.robots import simple_motor
 
 
 class PoseController(Controller):
 
+    MOTOR_CONTROL_MODE = simple_motor.MOTOR_CONTROL_POSITION
+
     def __init__(self, robot, get_time_since_reset):
         super(PoseController, self).__init__(robot, get_time_since_reset)
+        self._constants = robot.GetCtrlConstants()
         self._orientation = [0, 0, 0]
         self._position = [0, 0, 0]
-        self._frames = np.asmatrix([[constants.x_dist / 2, -constants.y_dist / 2, -constants.height],
-                                    [constants.x_dist / 2, constants.y_dist / 2, -constants.height],
-                                    [-constants.x_dist / 2, -constants.y_dist / 2, -constants.height],
-                                    [-constants.x_dist / 2, constants.y_dist / 2, -constants.height]])
-
-    @classmethod
-    def get_constants(cls):
-        del cls
-        return constants
+        self._frames = np.asmatrix([[self._constants.x_dist / 2, -self._constants.y_dist / 2, -self._constants.height],
+                                    [self._constants.x_dist / 2, self._constants.y_dist / 2, -self._constants.height],
+                                    [-self._constants.x_dist / 2, -self._constants.y_dist / 2, -self._constants.height],
+                                    [-self._constants.x_dist / 2, self._constants.y_dist / 2, -self._constants.height]])
 
     def update_controller_params(self, params):
         self._position, self._orientation = params
@@ -58,10 +57,10 @@ class PoseController(Controller):
         foot_rear_right = np.asarray([self._frames[2, 0], self._frames[2, 1], self._frames[2, 2]])
         foot_rear_left = np.asarray([self._frames[3, 0], self._frames[3, 1], self._frames[3, 2]])
         # rotation vertices
-        hip_front_right_vertex = kinematics.transform(constants.hip_front_right_v, self._orientation, self._position)
-        hip_front_left_vertex = kinematics.transform(constants.hip_front_left_v, self._orientation, self._position)
-        hip_rear_right_vertex = kinematics.transform(constants.hip_rear_right_v, self._orientation, self._position)
-        hip_rear_left_vertex = kinematics.transform(constants.hip_rear_left_v, self._orientation, self._position)
+        hip_front_right_vertex = kinematics.transform(self._constants.hip_front_right_v, self._orientation, self._position)
+        hip_front_left_vertex = kinematics.transform(self._constants.hip_front_left_v, self._orientation, self._position)
+        hip_rear_right_vertex = kinematics.transform(self._constants.hip_rear_right_v, self._orientation, self._position)
+        hip_rear_left_vertex = kinematics.transform(self._constants.hip_rear_left_v, self._orientation, self._position)
         # leg vectors
         front_right_coord = foot_front_right - hip_front_right_vertex
         front_left_coord = foot_front_left - hip_front_left_vertex
@@ -75,10 +74,10 @@ class PoseController(Controller):
         t_rear_right_coord = kinematics.transform(rear_right_coord, inv_orientation, inv_position)
         t_rear_left_coord = kinematics.transform(rear_left_coord, inv_orientation, inv_position)
         # solve IK
-        front_right_angles = kinematics.solve_IK(t_front_right_coord, constants.hip, constants.leg, constants.foot, True)
-        front_left_angles = kinematics.solve_IK(t_front_left_coord, constants.hip, constants.leg, constants.foot, False)
-        rear_right_angles = kinematics.solve_IK(t_rear_right_coord, constants.hip, constants.leg, constants.foot, True)
-        rear_left_angles = kinematics.solve_IK(t_rear_left_coord, constants.hip, constants.leg, constants.foot, False)
+        front_right_angles = kinematics.solve_IK(t_front_right_coord, self._constants.hip, self._constants.leg, self._constants.foot, True)
+        front_left_angles = kinematics.solve_IK(t_front_left_coord, self._constants.hip, self._constants.leg, self._constants.foot, False)
+        rear_right_angles = kinematics.solve_IK(t_rear_right_coord, self._constants.hip, self._constants.leg, self._constants.foot, True)
+        rear_left_angles = kinematics.solve_IK(t_rear_left_coord, self._constants.hip, self._constants.leg, self._constants.foot, False)
 
         # t_front_right = hip_front_right_vertex + t_front_right_coord
         # t_front_left = hip_front_left_vertex + t_front_left_coord
