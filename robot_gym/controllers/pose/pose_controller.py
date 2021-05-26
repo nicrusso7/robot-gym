@@ -1,9 +1,12 @@
 import numpy as np
 from robot_gym.controllers.controller import Controller
 from robot_gym.controllers.pose import constants, kinematics
+from robot_gym.model.robots import simple_motor
 
 
 class PoseController(Controller):
+    
+    MOTOR_CONTROL_MODE = simple_motor.MOTOR_CONTROL_POSITION
 
     def __init__(self, robot, get_time_since_reset):
         super(PoseController, self).__init__(robot, get_time_since_reset)
