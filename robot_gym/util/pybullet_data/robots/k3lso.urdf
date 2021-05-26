@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<robot name="k3lso">
+<robot name="k3lso_robot">
   <material name="silver_default">
     <color rgba="0.700 0.700 0.700 1.000"/>
   </material>
@@ -199,11 +199,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0.244307 0.188457 0.280011"/>
       <geometry>
-<<<<<<< Updated upstream
-        <mesh filename="k3lso/obj/abduct_hr_1.obj/" scale="0.001 0.001 0.001"/>
-=======
         <mesh filename="k3lso/obj/RR_lower_1.obj" scale="0.001 0.001 0.001"/>
->>>>>>> Stashed changes
       </geometry>
     </collision>
   </link>
@@ -352,6 +348,8 @@
     <parent link="base_link"/>
     <child link="FR_hip_1"/>
     <axis xyz="1.0 0.0 -0.0"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="FR_upper_joint" type="continuous">
     <origin rpy="0 0 0" xyz="0.05792 -0.031938 0.000192"/>
@@ -365,17 +363,10 @@
     <child link="FR_lower_v1_1"/>
     <axis xyz="0.0 0.999848 -0.017452"/>
   </joint>
-<<<<<<< Updated upstream
-  <joint name="toe_fr_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.002252 0.0177 -0.272251"/>
-    <parent link="shank_hl_1"/>
-    <child link="toe_hr_1"/>
-=======
   <joint name="FR_toe_fixed" type="fixed">
     <origin rpy="0 0 0" xyz="0.009617 0.009291 -0.252724"/>
     <parent link="FR_lower_v1_1"/>
     <child link="FR_toe_1"/>
->>>>>>> Stashed changes
   </joint>
   <joint name="RL_hip_joint" type="continuous">
     <origin rpy="0 0 0" xyz="-0.1873 0.055 -0.000895"/>
@@ -383,28 +374,7 @@
     <child link="RL_hip_v1_1"/>
     <axis xyz="-1.0 -0.0 0.0"/>
   </joint>
-<<<<<<< Updated upstream
-  <joint name="abduct_fl_to_thigh_fl_j" type="continuous">
-    <origin rpy="0 0 0" xyz="0.05792 0.031937 -0.000366"/>
-    <parent link="abduct_fl_1"/>
-    <child link="thigh_hl_1"/>
-    <axis xyz="0.0 1.0 0.0"/>
-  </joint>
-  <joint name="thigh_fl_to_knee_fl_j" type="continuous">
-    <origin rpy="0 0 0" xyz="-0.000914 0.10152 -0.27875"/>
-    <parent link="thigh_hl_1"/>
-    <child link="shank_hl_2"/>
-    <axis xyz="-0.0 -1.0 -0.0"/>
-  </joint>
-  <joint name="toe_fl_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.002252 -0.0177 -0.272251"/>
-    <parent link="shank_hl_2"/>
-    <child link="toe_hr_2"/>
-  </joint>
-  <joint name="torso_to_abduct_hr_j" type="continuous">
-=======
   <joint name="RR_hip_joint" type="continuous">
->>>>>>> Stashed changes
     <origin rpy="0 0 0" xyz="-0.1873 -0.055 -0.000895"/>
     <parent link="base_link"/>
     <child link="RR_hip_v1_1"/>
@@ -428,17 +398,10 @@
     <child link="RR_lower_1"/>
     <axis xyz="0.0 1.0 -0.0"/>
   </joint>
-<<<<<<< Updated upstream
-  <joint name="toe_hr_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.002251 0.0177 -0.272251"/>
-    <parent link="shank_hl_3"/>
-    <child link="toe_hr_3"/>
-=======
   <joint name="RR_toe_fixed" type="fixed">
     <origin rpy="0 0 0" xyz="0.009617 0.0137 -0.252523"/>
     <parent link="RR_lower_1"/>
     <child link="RR_toe_1"/>
->>>>>>> Stashed changes
   </joint>
   <joint name="FL_upper_joint" type="continuous">
     <origin rpy="0 0 0" xyz="0.05792 0.031937 -0.000366"/>
@@ -464,12 +427,6 @@
     <child link="FL_lower_1"/>
     <axis xyz="-0.0 -1.0 -0.0"/>
   </joint>
-<<<<<<< Updated upstream
-  <joint name="toe_hl_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.002251 -0.0177 -0.272251"/>
-    <parent link="shank_hl_4"/>
-    <child link="toe_hr_4"/>
-=======
   <joint name="FL_toe_fixed" type="fixed">
     <origin rpy="0 0 0" xyz="0.009616 -0.0087 -0.252523"/>
     <parent link="FL_lower_1"/>
@@ -479,6 +436,5 @@
     <origin rpy="0 0 0" xyz="0.009617 0.00929 -0.252723"/>
     <parent link="RL_lower_1"/>
     <child link="RL_toe_1"/>
->>>>>>> Stashed changes
   </joint>
 </robot>
