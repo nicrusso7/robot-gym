@@ -153,5 +153,5 @@ class Playground:
 
 
 if __name__ == "__main__":
-    playground = Playground(k3lso.K3lso, "1", False)
+    playground = Playground(ghost.Ghost, "1", False)
     playground.run()
