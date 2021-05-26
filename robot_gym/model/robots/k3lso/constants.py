@@ -30,10 +30,10 @@ UPPER_JOINTS_PATTERN = "to_thigh"
 LOWER_JOINTS_PATTERN = "to_knee"
 
 DEFAULT_HIP_POSITIONS = (
-    (0.22, -0.1, 0),
-    (0.22, 0.1, 0),
-    (-0.22, -0.1, 0),
-    (-0.22, 0.1, 0),
+    (0.22, -0.105, 0),
+    (0.22, 0.105, 0),
+    (-0.22, -0.105, 0),
+    (-0.22, 0.105, 0),
 )
 
 BODY_B_FIELD_NUMBER = 2

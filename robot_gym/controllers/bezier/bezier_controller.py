@@ -1,15 +1,18 @@
 import time
 import numpy as np
-from robot_gym.controllers.pose import kinematics, constants
-from robot_gym.controllers.bezier import constants as const
+from robot_gym.controllers.pose import kinematics
 
 from robot_gym.controllers.controller import Controller
+from robot_gym.model.robots import simple_motor
 
 
 class BezierController(Controller):
 
+    MOTOR_CONTROL_MODE = simple_motor.MOTOR_CONTROL_POSITION
+
     def __init__(self, robot, get_time_since_reset):
         super(BezierController, self).__init__(robot, get_time_since_reset)
+        self._constants = robot.GetCtrlConstants()
         self._frame = np.zeros([4, 3])
         self._phi = 0.
         self._phi_stance = 0.
@@ -40,11 +43,6 @@ class BezierController(Controller):
         self._step_angle = .0
         self._step_rotation = .0
         self._step_period = .0
-
-    @classmethod
-    def get_constants(cls):
-        del cls
-        return const
 
     @staticmethod
     def solve_bin_factor(n, k):
@@ -198,10 +196,10 @@ class BezierController(Controller):
         foot_rear_right = np.asarray([self._frame[2, 0], self._frame[2, 1], self._frame[2, 2]])
         foot_rear_left = np.asarray([self._frame[3, 0], self._frame[3, 1], self._frame[3, 2]])
         # rotation vertices
-        hip_front_right_vertex = kinematics.transform(constants.hip_front_right_v, orientation, position)
-        hip_front_left_vertex = kinematics.transform(constants.hip_front_left_v, orientation, position)
-        hip_rear_right_vertex = kinematics.transform(constants.hip_rear_right_v, orientation, position)
-        hip_rear_left_vertex = kinematics.transform(constants.hip_rear_left_v, orientation, position)
+        hip_front_right_vertex = kinematics.transform(self._constants.hip_front_right_v, orientation, position)
+        hip_front_left_vertex = kinematics.transform(self._constants.hip_front_left_v, orientation, position)
+        hip_rear_right_vertex = kinematics.transform(self._constants.hip_rear_right_v, orientation, position)
+        hip_rear_left_vertex = kinematics.transform(self._constants.hip_rear_left_v, orientation, position)
         # leg vectors
         front_right_coord = foot_front_right - hip_front_right_vertex
         front_left_coord = foot_front_left - hip_front_left_vertex
@@ -215,10 +213,10 @@ class BezierController(Controller):
         t_rear_right_coord = kinematics.transform(rear_right_coord, inv_orientation, inv_position)
         t_rear_left_coord = kinematics.transform(rear_left_coord, inv_orientation, inv_position)
         # solve IK
-        front_right_angles = kinematics.solve_IK(t_front_right_coord, constants.hip, constants.leg, constants.foot, True)
-        front_left_angles = kinematics.solve_IK(t_front_left_coord, constants.hip, constants.leg, constants.foot, False)
-        rear_right_angles = kinematics.solve_IK(t_rear_right_coord, constants.hip, constants.leg, constants.foot, True)
-        rear_left_angles = kinematics.solve_IK(t_rear_left_coord, constants.hip, constants.leg, constants.foot, False)
+        front_right_angles = kinematics.solve_IK(t_front_right_coord, self._constants.hip, self._constants.leg, self._constants.foot, True)
+        front_left_angles = kinematics.solve_IK(t_front_left_coord, self._constants.hip, self._constants.leg, self._constants.foot, False)
+        rear_right_angles = kinematics.solve_IK(t_rear_right_coord, self._constants.hip, self._constants.leg, self._constants.foot, True)
+        rear_left_angles = kinematics.solve_IK(t_rear_left_coord, self._constants.hip, self._constants.leg, self._constants.foot, False)
 
         signal = [
             front_right_angles[0], front_right_angles[1], front_right_angles[2],
