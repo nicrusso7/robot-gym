@@ -42,7 +42,7 @@ class MPCController(Controller):
             desired_speed=desired_speed,
             desired_twisting_speed=desired_twisting_speed,
             desired_height=self._constants.MPC_BODY_HEIGHT,
-            foot_clearance=0.01)
+            foot_clearance=0.02)
 
         st_controller = torque_stance_leg_controller.TorqueStanceLegController(
             robot,
