@@ -5,7 +5,7 @@ tensorflow==1.15.3
 tensorflow-probability==0.7.0
 ruamel.yaml
 click
-motion_imitation==0.0.5
+motion_imitation==0.0.6
 keras==2.3.1
 keras-rl==0.4.2
 shapely
