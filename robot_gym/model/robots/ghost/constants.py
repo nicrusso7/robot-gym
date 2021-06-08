@@ -23,6 +23,7 @@ HIP_NAME_PATTERN = re.compile(r"\w+_hip_\w+")
 UPPER_NAME_PATTERN = re.compile(r"\w+_upper_\w+")
 LOWER_NAME_PATTERN = re.compile(r"\w+_lower_\w+")
 TOE_NAME_PATTERN = re.compile(r"\w+_toe\d*")
+ARM_NAME_PATTERN = re.compile(r"\w+_arm_\w+")
 
 HIP_JOINTS_PATTERN = "hip_joint"
 UPPER_JOINTS_PATTERN = "upper_joint"

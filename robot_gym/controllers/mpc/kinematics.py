@@ -21,6 +21,8 @@ class Kinematics:
           extracted with indices [6 + leg_id * 3: 6 + leg_id * 3 + 3].
         """
         all_joint_angles = [state[0] for state in self._robot.GetJointStates]
+        # add arm joints, if any
+        all_joint_angles.extend([0] * len(self._robot.arm_joints))
         zero_vec = [0] * len(all_joint_angles)
         jv, _ = self._pybullet_client.calculateJacobian(self._robot.GetRobotId, link_id,
                                                         (0, 0, 0), all_joint_angles,

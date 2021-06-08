@@ -19,6 +19,15 @@ MARK_PARAMS = {
             "RL_upper_joint",
             "RL_lower_joint",
         ],
+        'arm': [
+            "motor_arm_0",
+            "motor_arm_1",
+            "motor_arm_2",
+            "motor_arm_3",
+            "motor_arm_4",
+            "motor_arm_5"
+        ],
+        'arm_gripper': 'arm_section_5',
         'hardware': {
             'camera': {
                 'default': 0,

@@ -22,7 +22,11 @@ class Robot:
         self._constants = self.GetConstants()
         self._num_motors = self._marks.MARK_PARAMS[self._mark]['num_motors']
         self._num_legs = self._marks.MARK_PARAMS[self._mark]['num_legs']
-        self._motors_name = self._marks.MARK_PARAMS[self._mark]['motor_names']
+        self._motors_names = self._marks.MARK_PARAMS[self._mark]['motor_names']
+        self._arm_motors_names = [] if 'arm' not in self._marks.MARK_PARAMS[self._mark] else \
+            self._marks.MARK_PARAMS[self._mark]['arm']
+        self._arm_gripper = "" if 'arm_gripper' not in self._marks.MARK_PARAMS[self._mark] else \
+            self._marks.MARK_PARAMS[self._mark]['arm_gripper']
         self._motor_enabled_list = self.GetMotorConstants().MOTOR_ENABLED
         self._motor_offset = self.GetMotorConstants().MOTOR_OFFSET
         self._motor_direction = self.GetMotorConstants().MOTOR_DIRECTION
@@ -53,6 +57,14 @@ class Robot:
     @property
     def num_motors(self):
         return self._num_motors
+
+    @property
+    def arm_joints(self):
+        return self._arm_link_ids
+
+    @property
+    def arm_gripper(self):
+        return self._arm_link_ids_map[self._arm_gripper]
 
     @property
     def pybullet_client(self):
@@ -118,6 +130,8 @@ class Robot:
         return self._motor_model
 
     def ReceiveObservation(self):
+        # l = self._motor_id_list
+        # l.extend(self._arm_link_ids)
         self._joint_states = self._pybullet_client.getJointStates(self._quadruped, self._motor_id_list)
 
     def _load_urdf(self):
@@ -135,7 +149,7 @@ class Robot:
                 controlMode=self._pybullet_client.VELOCITY_CONTROL,
                 targetVelocity=0,
                 force=0)
-        for name, i in zip(self._motors_name, range(len(self._motors_name))):
+        for name, i in zip(self._motors_names, range(len(self._motors_names))):
             if self._constants.HIP_JOINTS_PATTERN in name:
                 angle = self._constants.INIT_MOTOR_ANGLES[i] + self._constants.HIP_JOINT_OFFSET
             elif self._constants.UPPER_JOINTS_PATTERN in name:
@@ -149,7 +163,7 @@ class Robot:
                 self._quadruped, self._joint_name_to_id[name], angle, targetVelocity=0)
 
     def _GetMotorNames(self):
-        return self._motors_name
+        return self._motors_names
 
     def _BuildMotorIdList(self):
         self._motor_id_list = [
@@ -326,16 +340,20 @@ class Robot:
           ValueError: Unknown category of the joint name.
         """
         num_joints = self._pybullet_client.getNumJoints(self._quadruped)
+
         self._chassis_link_ids = [-1]
         self._leg_link_ids = []
         self._motor_link_ids = []
         self._knee_link_ids = []
         self._foot_link_ids = []
+        self._arm_link_ids = []
+        self._arm_link_ids_map = {}
 
         for i in range(num_joints):
             joint_info = self._pybullet_client.getJointInfo(self._quadruped, i)
             joint_name = joint_info[1].decode("UTF-8")
             joint_id = self._joint_name_to_id[joint_name]
+            # print(f'{joint_name}={joint_id}')
             if self._constants.CHASSIS_NAME_PATTERN.match(joint_name):
                 self._chassis_link_ids.append(joint_id)
             elif self._constants.HIP_NAME_PATTERN.match(joint_name):
@@ -349,6 +367,9 @@ class Robot:
             elif self._constants.TOE_NAME_PATTERN.match(joint_name):
                 # assert self._urdf_filename == URDF_WITH_TOES
                 self._foot_link_ids.append(joint_id)
+            elif self._constants.ARM_NAME_PATTERN.match(joint_name):
+                self._arm_link_ids_map[joint_info[12].decode("utf-8")] = joint_info[16]
+                self._arm_link_ids.append(joint_id)
             else:
                 print("Unknown category of joint %s" % joint_name)
 
@@ -361,6 +382,7 @@ class Robot:
         self._knee_link_ids.sort()
         self._foot_link_ids.sort()
         self._leg_link_ids.sort()
+        self._arm_link_ids.sort()
 
         return
 
