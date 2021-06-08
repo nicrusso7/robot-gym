@@ -350,7 +350,7 @@ class Robot:
                 # assert self._urdf_filename == URDF_WITH_TOES
                 self._foot_link_ids.append(joint_id)
             else:
-                raise ValueError("Unknown category of joint %s" % joint_name)
+                print("Unknown category of joint %s" % joint_name)
 
         self._leg_link_ids.extend(self._knee_link_ids)
         self._leg_link_ids.extend(self._foot_link_ids)

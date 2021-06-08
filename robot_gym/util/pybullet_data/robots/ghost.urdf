@@ -4,7 +4,7 @@
     <color rgba="0.0 0.0 0.0 1.0"/>
   </material>
   <material name="blue">
-    <color rgba="0.0 0.0 0.8 1.0"/>
+    <color rgba="0.0 1.0 1.0 1.0"/>
   </material>
   <material name="grey">
     <color rgba="0.6 0.6 0.6 1"/>
@@ -16,7 +16,7 @@
       <geometry>
         <mesh filename="ghost/body.obj" scale="1 1 1"/>
       </geometry>
-      <material name="black"/>
+      <material name="blue"/>
     </visual>
     <!-- <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -32,8 +32,8 @@
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-       <mass value="13.715"/>
-       <inertia ixx="0.22" ixy="0" ixz="0" iyy="0.431" iyz="0" izz="0.565"/>
+      <mass value="13.715"/>
+      <inertia ixx="0.22" ixy="0" ixz="0" iyy="0.431" iyz="0" izz="0.565"/>
     </inertial>
   </link>
 
@@ -43,9 +43,9 @@
       <lateral_friction value="1"/>
     </contact> -->
     <inertial>
-       <origin rpy="0 0 0" xyz="0.02 0 0"/>
-       <mass value="1.095"/>
-       <inertia ixx="0.002" ixy="0" ixz="0" iyy=".002" iyz="0" izz=".001"/>
+      <origin rpy="0 0 0" xyz="0.02 0 0"/>
+      <mass value="1.095"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy=".002" iyz="0" izz=".001"/>
     </inertial>
 
     <visual>
@@ -53,7 +53,7 @@
       <geometry>
         <mesh filename="ghost/hip.obj" scale="1 1 1"/>
       </geometry>
-       <material name="blue"/>
+      <material name="grey"/>
     </visual>
 
     <collision>
@@ -75,20 +75,20 @@
 
   <!-- FR UPPER LEG -->
   <link name="FR_upper">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
-     <origin rpy="0 0 0" xyz="0 -0.04 -0.04"/>
-       <mass value="1.527"/>
-       <inertia ixx="0.015" ixy="0" ixz="0" iyy="0.007" iyz="0" izz="0.01"/>
+      <origin rpy="0 0 0" xyz="0 -0.04 -0.04"/>
+      <mass value="1.527"/>
+      <inertia ixx="0.015" ixy="0" ixz="0" iyy="0.007" iyz="0" izz="0.01"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/upper_leg_mirror.obj" scale="1 1 1"/>
       </geometry>
-      <material name="blue"/>
+      <material name="black"/>
     </visual>
 
     <collision>
@@ -110,20 +110,20 @@
 
   <!-- FR LOWER LEG -->
   <link name="FR_lower">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 -0.16 -0.02"/>
-       <mass value="0.241"/>
-       <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+      <mass value="0.241"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
     </inertial>
     <visual>
       <origin rpy="1.57079 1.57079 0" xyz="0 0.0 0"/>
       <geometry>
         <mesh filename="ghost/lower_leg.obj" scale="1 1 1"/>
       </geometry>
-       <material name="grey"/>
+      <material name="grey"/>
     </visual>
 
     <collision>
@@ -180,20 +180,20 @@
 
   <!-- FL HIP -->
   <link name="FL_hip">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
-     <origin rpy="0 0 0" xyz="-.02 0 0"/>
-       <mass value="1.095"/>
-       <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.001"/>
+      <origin rpy="0 0 0" xyz="-.02 0 0"/>
+      <mass value="1.095"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.001"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/hip.obj" scale="1 1 1"/>
       </geometry>
-       <material name="blue">
+      <material name="grey">
       </material>
     </visual>
 
@@ -216,25 +216,25 @@
 
   <!-- FL UPPER LEG -->
   <link name="FL_upper">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
-       <origin rpy="0 0 0" xyz="0 -0.04 -0.04"/>
-       <mass value="1.527"/>
-       <inertia ixx="0.016" ixy="0" ixz="0" iyy="0.007" iyz="0" izz="0.011"/>
+      <origin rpy="0 0 0" xyz="0 -0.04 -0.04"/>
+      <mass value="1.527"/>
+      <inertia ixx="0.016" ixy="0" ixz="0" iyy="0.007" iyz="0" izz="0.011"/>
     </inertial>
-     <visual>
+    <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
 
         <mesh filename="ghost/upper_leg.obj" scale="1 1 1"/>
       </geometry>
-       <material name="blue">
+      <material name="black">
       </material>
     </visual>
 
-     <collision>
+    <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/upper_leg.obj" scale="1 1 1"/>
@@ -254,24 +254,24 @@
 
   <!-- FL LOWER LEG -->
   <link name="FL_lower">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 -0.16 -0.02"/>
-       <mass value="0.241"/>
-       <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+      <mass value="0.241"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
     </inertial>
-   <visual>
+    <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/lower_leg.obj" scale="1 1 1"/>
       </geometry>
-       <material name="grey">
-       </material>
+      <material name="grey">
+      </material>
     </visual>
 
-     <collision>
+    <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/lower_leg.obj" scale="1 1 1"/>
@@ -325,13 +325,13 @@
 
   <!-- RR HIP -->
   <link name="RR_hip">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0.02 0 0"/>
-       <mass value="1.095"/>
-       <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.001"/>
+      <mass value="1.095"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.001"/>
     </inertial>
 
     <visual>
@@ -339,10 +339,10 @@
       <geometry>
         <mesh filename="ghost/hip.obj" scale="1 1 1"/>
       </geometry>
-       <material name="blue"/>
+      <material name="grey"/>
     </visual>
 
-     <collision>
+    <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/hip.obj" scale="1 1 1"/>
@@ -361,20 +361,20 @@
 
   <!-- RR UPPER LEG -->
   <link name="RR_upper">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
-     <origin rpy="0 0 0" xyz="0 -0.04 -0.04"/>
-       <mass value="1.527"/>
-       <inertia ixx="0.016" ixy="0" ixz="0" iyy="0.007" iyz="0" izz="0.011"/>
+      <origin rpy="0 0 0" xyz="0 -0.04 -0.04"/>
+      <mass value="1.527"/>
+      <inertia ixx="0.016" ixy="0" ixz="0" iyy="0.007" iyz="0" izz="0.011"/>
     </inertial>
-       <visual>
+    <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/upper_leg_mirror.obj" scale="1 1 1"/>
       </geometry>
-       <material name="blue"/>
+      <material name="black"/>
     </visual>
 
     <collision>
@@ -396,23 +396,23 @@
 
   <!-- RR LOWER LEG -->
   <link name="RR_lower">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 -0.16 -0.02"/>
-       <mass value="0.241"/>
-       <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+      <mass value="0.241"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
     </inertial>
-       <visual>
+    <visual>
       <origin rpy="1.57079 1.57079 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/lower_leg.obj" scale="1 1 1"/>
       </geometry>
-       <material name="grey"/>
+      <material name="grey"/>
     </visual>
 
-     <collision>
+    <collision>
       <origin rpy="1.57079 1.57079 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/lower_leg.obj" scale="1 1 1"/>
@@ -466,20 +466,20 @@
 
   <!-- RL HIP -->
   <link name="RL_hip">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
       <origin rpy="0 0 0" xyz="-.02 0 0"/>
-       <mass value="1.095"/>
-       <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.001"/>
+      <mass value="1.095"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.001"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/hip.obj" scale="1 1 1"/>
       </geometry>
-       <material name="blue"/>
+      <material name="grey"/>
     </visual>
 
     <collision>
@@ -488,9 +488,9 @@
         <mesh filename="ghost/hip.obj" scale="1 1 1"/>
       </geometry>
     </collision>
-   </link>
+  </link>
 
-   <joint name="RL_hip_joint" type="continuous">
+  <joint name="RL_hip_joint" type="continuous">
     <axis xyz="1 0 0"/>
     <parent link="trunk"/>
     <child link="RL_hip"/>
@@ -501,20 +501,20 @@
 
   <!-- RL UPPER LEG -->
   <link name="RL_upper">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 -0.04 -0.04"/>
-       <mass value="1.527"/>
-       <inertia ixx="0.016" ixy="0" ixz="0" iyy="0.007" iyz="0" izz="0.011"/>
+      <mass value="1.527"/>
+      <inertia ixx="0.016" ixy="0" ixz="0" iyy="0.007" iyz="0" izz="0.011"/>
     </inertial>
-     <visual>
+    <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/upper_leg.obj" scale="1 1 1"/>
       </geometry>
-       <material name="blue"/>
+      <material name="black"/>
     </visual>
 
     <collision>
@@ -536,20 +536,20 @@
 
   <!-- RL LOWER LEG -->
   <link name="RL_lower">
-  <!-- <contact>
-      <lateral_friction value="1"/>
-  </contact> -->
+    <!-- <contact>
+        <lateral_friction value="1"/>
+    </contact> -->
     <inertial>
       <origin rpy="0 0 0" xyz="0 -0.16 -0.02"/>
-       <mass value="0.241"/>
-       <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+      <mass value="0.241"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
     </inertial>
-   <visual>
+    <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="ghost/lower_leg.obj" scale="1 1 1"/>
       </geometry>
-       <material name="grey"/>
+      <material name="grey"/>
     </visual>
 
     <collision>
@@ -602,5 +602,201 @@
     <child link="RL_toe"/>
     <origin xyz="0.02 -0.25 0"/>
     <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <!-- Arm -->
+  <link name="arm_base_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.009227173757711551 0.05711546040397183 -0.01795385944355127"/>
+      <mass value="0.8137272025946127"/>
+      <inertia ixx="0.000507" ixy="1e-06" ixz="-6e-06" iyy="0.000506" iyz="2e-06" izz="0.000865"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="spot_arm/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="spot_arm/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="arm_base" type="fixed">
+    <origin rpy="0 0 0" xyz="0 -0.057 0.13"/>
+    <parent link="trunk"/>
+    <child link="arm_base_link"/>
+  </joint>
+
+  <joint name="Rev1" type="continuous">
+    <origin rpy="0 0 0" xyz="0.009381 0.055159 -0.00311"/>
+    <parent link="arm_base_link"/>
+    <child link="bottom_v1_1"/>
+    <axis xyz="0.0 0.0 -1.0"/>
+  </joint>
+
+  <link name="bottom_v1_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="4.3834423255225546e-05 1.851716180462093e-05 0.04608850485831119"/>
+      <mass value="3.7768145403916407"/>
+      <inertia ixx="0.003419" ixy="1e-06" ixz="7e-06" iyy="0.015468" iyz="3e-06" izz="0.014948"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.009381 -0.055159 0.00311"/>
+      <geometry>
+        <mesh filename="spot_arm/bottom_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.009381 -0.055159 0.00311"/>
+      <geometry>
+        <mesh filename="spot_arm/bottom_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="Arm_1_v1_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.03142910994215048 0.13773460820254285 -0.0002682558712496577"/>
+      <mass value="4.3410244605972785"/>
+      <inertia ixx="0.031102" ixy="6.4e-05" ixz="-0.0" iyy="0.002102" iyz="8.3e-05" izz="0.031758"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.040881 -0.055159 -0.04679"/>
+      <geometry>
+        <mesh filename="spot_arm/Arm_1_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.040881 -0.055159 -0.04679"/>
+      <geometry>
+        <mesh filename="spot_arm/Arm_1_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="Arm_2_v1_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.0400132980912803 -0.11087815619558039 0.05350854885453979"/>
+      <mass value="4.446518989183043"/>
+      <inertia ixx="0.031386" ixy="-0.000713" ixz="7.5e-05" iyy="0.004183" iyz="0.004183" izz="0.032487"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.048281 -0.321159 -0.04679"/>
+      <geometry>
+        <mesh filename="spot_arm/Arm_2_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.048281 -0.321159 -0.04679"/>
+      <geometry>
+        <mesh filename="spot_arm/Arm_2_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="neck_v1_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.02091414181608834 -0.018445992362037696 0.00022304823726640444"/>
+      <mass value="0.8026625496929148"/>
+      <inertia ixx="0.000752" ixy="-3e-05" ixz="0.0" iyy="0.000408" iyz="4.8e-05" izz="0.000713"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.009769 -0.021298 -0.120135"/>
+      <geometry>
+        <mesh filename="spot_arm/neck_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.009769 -0.021298 -0.120135"/>
+      <geometry>
+        <mesh filename="spot_arm/neck_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="head_v1_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0005326054691075326 -0.05481950519531094 -0.00779651999716835"/>
+      <mass value="1.2644309089007917"/>
+      <inertia ixx="0.003243" ixy="3.8e-05" ixz="1.7e-05" iyy="0.001545" iyz="-0.000559" izz="0.002975"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.00937 0.027862 -0.124436"/>
+      <geometry>
+        <mesh filename="spot_arm/head_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.00937 0.027862 -0.124436"/>
+      <geometry>
+        <mesh filename="spot_arm/head_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="gripper_v1_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.032852931223272375 -0.04190244397153055 -0.015098287029036872"/>
+      <mass value="0.8080491704220107"/>
+      <inertia ixx="0.000715" ixy="0.0" ixz="0.0" iyy="0.000727" iyz="-0.000254" izz="0.000856"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.044377 0.107781 -0.146383"/>
+      <geometry>
+        <mesh filename="spot_arm/gripper_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.044377 0.107781 -0.146383"/>
+      <geometry>
+        <mesh filename="spot_arm/gripper_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="Rev2" type="continuous">
+    <origin rpy="0 0 0" xyz="0.0315 0.0 0.0499"/>
+    <parent link="bottom_v1_1"/>
+    <child link="Arm_1_v1_1"/>
+    <axis xyz="1.0 -0.0 -0.0"/>
+  </joint>
+
+  <joint name="Rev3" type="continuous">
+    <origin rpy="0 0 0" xyz="0.0074 0.266 0.0"/>
+    <parent link="Arm_1_v1_1"/>
+    <child link="Arm_2_v1_1"/>
+    <axis xyz="-1.0 0.0 -0.0"/>
+  </joint>
+
+  <joint name="Rev4" type="continuous">
+    <origin rpy="0 0 0" xyz="-0.05805 -0.299861 0.073345"/>
+    <parent link="Arm_2_v1_1"/>
+    <child link="neck_v1_1"/>
+    <axis xyz="1.0 0.0 0.0"/>
+  </joint>
+
+  <joint name="Rev5" type="continuous">
+    <origin rpy="0 0 0" xyz="0.019139 -0.04916 0.004301"/>
+    <parent link="neck_v1_1"/>
+    <child link="head_v1_1"/>
+    <axis xyz="-0.0 -0.996195 0.087156"/>
+  </joint>
+
+  <joint name="Rev6" type="continuous">
+    <origin rpy="0 0 0" xyz="0.035007 -0.079919 0.021947"/>
+    <parent link="head_v1_1"/>
+    <child link="gripper_v1_1"/>
+    <axis xyz="-1.0 0.0 -0.0"/>
   </joint>
 </robot>
