@@ -42,7 +42,7 @@ class ArmController(Controller):
         rest_position = list(get_joint_positions(robot_id, arm_joints))
         joint_range = list(np.array(max_limits) - np.array(min_limits))
         joint_range = [item + 1 for item in joint_range]
-        jd = [0.1 for _ in joint_range]
+        # jd = [0.1 for _ in joint_range]
         while it < max_iter:
             joint_poses = pybullet_client.calculateInverseKinematics(
                 robot_id,
