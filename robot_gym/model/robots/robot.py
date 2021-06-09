@@ -435,3 +435,8 @@ class Robot:
 
     def get_default_camera(self):
         return self._equip["cams"][self._equip["default_cam"]]
+
+    def get_end_effector_position(self):
+        if self._arm_gripper is not "":
+            return self.pybullet_client.getLinkState(self._quadruped, self.arm_gripper)[4]
+        return [0, 0, 0]

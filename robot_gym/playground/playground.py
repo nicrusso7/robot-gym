@@ -115,9 +115,9 @@ class Playground:
             action = self._sim.controller.get_action()
             # apply action to robot
             self._sim.ApplyStepAction(action)
-            if self.is_falling():
-                # robot is falling down, reset the simulation.
-                self._reset(None)
+            # if self.is_falling():
+            #     # robot is falling down, reset the simulation.
+            #     self._reset(None)
             current_time = self._sim.GetTimeSinceReset()
             expected_duration = current_time - start_time_robot
             actual_duration = time.time() - start_time_wall

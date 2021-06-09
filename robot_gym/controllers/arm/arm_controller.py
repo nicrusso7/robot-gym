@@ -9,12 +9,12 @@ class ArmController(Controller):
 
     def __init__(self, robot, get_time_since_reset):
         super(ArmController, self).__init__(robot, get_time_since_reset)
-        self._end_effector_target = [0., 0., 0.]
+        self._end_effector_target = robot.get_end_effector_position()
 
     def setup_ui_params(self, pybullet_client):
-        end_eff_x = pybullet_client.addUserDebugParameter("arm_target_x", -6.0, 6.0, 0.)
-        end_eff_y = pybullet_client.addUserDebugParameter("arm_target_y", -6.0, 6.0, 0.)
-        end_eff_z = pybullet_client.addUserDebugParameter("arm_target_z", -6.0, 6.0, 0.)
+        end_eff_x = pybullet_client.addUserDebugParameter("arm_target_x", -1.0, 1.0, self._end_effector_target[0])
+        end_eff_y = pybullet_client.addUserDebugParameter("arm_target_y", -1.0, 1.0, self._end_effector_target[1])
+        end_eff_z = pybullet_client.addUserDebugParameter("arm_target_z", -1.0, 1.0, self._end_effector_target[2])
         return end_eff_x, end_eff_y, end_eff_z
 
     def read_ui_params(self, pybullet_client, ui):
@@ -35,7 +35,7 @@ class ArmController(Controller):
 
     @staticmethod
     def _calculate_accurate_ik(pybullet_client, robot_id, arm_joints,
-                               end_effector_id, target_pos, threshold=0.01, max_iter=1):
+                               end_effector_id, target_pos, threshold=0.01, max_iter=100):
         it = 0
         max_limits = get_max_limits(robot_id, arm_joints)
         min_limits = get_min_limits(robot_id, arm_joints)
@@ -51,7 +51,7 @@ class ArmController(Controller):
                 lowerLimits=min_limits,
                 upperLimits=max_limits,
                 jointRanges=joint_range,
-                restPoses=rest_position,
+                restPoses=rest_position
                 )
 
             ls = pybullet_client.getLinkState(robot_id, end_effector_id)

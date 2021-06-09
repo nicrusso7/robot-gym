@@ -10,7 +10,7 @@ DEFAULT_HIP_ANGLE = 0.67
 DEFAULT_KNEE_ANGLE = -1.25
 
 ARM_REST_MOTOR_ANGLES = np.array([
-        0., 0., 0.,
+        -1.57, 0., 0.,
         0., 0., 0.
     ])
 

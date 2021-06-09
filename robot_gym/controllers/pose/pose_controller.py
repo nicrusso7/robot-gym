@@ -1,4 +1,6 @@
 import numpy as np
+
+from robot_gym.controllers.arm import arm_controller
 from robot_gym.controllers.controller import Controller
 from robot_gym.controllers.pose import kinematics
 from robot_gym.model.robots import simple_motor
@@ -10,6 +12,7 @@ class PoseController(Controller):
 
     def __init__(self, robot, get_time_since_reset):
         super(PoseController, self).__init__(robot, get_time_since_reset)
+        self._arm_ctrl = arm_controller.ArmController(robot, get_time_since_reset)
         self._constants = robot.GetCtrlConstants()
         self._orientation = [0, 0, 0]
         self._position = [0, 0, 0]
@@ -19,7 +22,8 @@ class PoseController(Controller):
                                     [-self._constants.x_dist / 2, self._constants.y_dist / 2, -self._constants.height]])
 
     def update_controller_params(self, params):
-        self._position, self._orientation = params
+        self._position, self._orientation, arm_target = params
+        self._arm_ctrl.update_controller_params(arm_target)
 
     def setup_ui_params(self, pybullet_client):
         base_x = pybullet_client.addUserDebugParameter("base_x", -.02, .02, 0.)
@@ -28,10 +32,11 @@ class PoseController(Controller):
         roll = pybullet_client.addUserDebugParameter("roll", -np.pi / 4, np.pi / 4, 0)
         pitch = pybullet_client.addUserDebugParameter("pitch", -np.pi / 4, np.pi / 4, 0)
         yaw = pybullet_client.addUserDebugParameter("yaw", -np.pi / 4, np.pi / 4, 0)
-        return base_x, base_y, base_z, roll, pitch, yaw
+        arm_ui = self._arm_ctrl.setup_ui_params(pybullet_client)
+        return base_x, base_y, base_z, roll, pitch, yaw, arm_ui
 
     def read_ui_params(self, pybullet_client, ui):
-        base_x, base_y, base_z, roll, pitch, yaw = ui
+        base_x, base_y, base_z, roll, pitch, yaw, arm_params = ui
         position = np.array(
             [
                 pybullet_client.readUserDebugParameter(base_x),
@@ -46,7 +51,8 @@ class PoseController(Controller):
                 pybullet_client.readUserDebugParameter(yaw)
             ]
         )
-        return position, orientation
+        arm_params = self._arm_ctrl.read_ui_params(pybullet_client, arm_params)
+        return position, orientation, arm_params
 
     def reset(self):
         pass
@@ -93,4 +99,8 @@ class PoseController(Controller):
             rear_right_angles[0], rear_right_angles[1], rear_right_angles[2],
             rear_left_angles[0], rear_left_angles[1], rear_left_angles[2]
         ]
+
+        arm_signal = self._arm_ctrl.get_action()[12:]
+        signal.extend(arm_signal)
+
         return signal
