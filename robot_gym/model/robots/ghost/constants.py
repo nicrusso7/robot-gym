@@ -9,12 +9,19 @@ DEFAULT_ABDUCTION_ANGLE = 0
 DEFAULT_HIP_ANGLE = 0.67
 DEFAULT_KNEE_ANGLE = -1.25
 
-INIT_MOTOR_ANGLES = np.array(
+ARM_REST_MOTOR_ANGLES = np.array([
+        0., 0., 0.,
+        0., 0., 0.
+    ])
+
+LEG_STAND_MOTOR_ANGLES = np.array(
     [
         DEFAULT_ABDUCTION_ANGLE,
         DEFAULT_HIP_ANGLE,
         DEFAULT_KNEE_ANGLE
     ] * 4)
+
+INIT_MOTOR_ANGLES = np.concatenate([LEG_STAND_MOTOR_ANGLES, ARM_REST_MOTOR_ANGLES])
 
 IDENTITY_ORIENTATION = [0, 0, 0, 1]
 
@@ -28,6 +35,7 @@ ARM_NAME_PATTERN = re.compile(r"\w+_arm_\w+")
 HIP_JOINTS_PATTERN = "hip_joint"
 UPPER_JOINTS_PATTERN = "upper_joint"
 LOWER_JOINTS_PATTERN = "lower_joint"
+ARM_JOINTS_PATTERN = "motor_arm"
 
 DEFAULT_HIP_POSITIONS = (
     (0.22, -0.1, 0),

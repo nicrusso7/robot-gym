@@ -7,7 +7,6 @@ from robot_gym.controllers.mpc import mpc_controller
 from robot_gym.core.simulation import Simulation
 from robot_gym.io.gamepad import xbox_one_pad
 from robot_gym.model.robots.ghost import ghost
-from robot_gym.model.robots.k3lso import k3lso
 
 
 class Playground:
@@ -17,12 +16,12 @@ class Playground:
         self._mark = mark
         self._record_video = record_video
         self._gamepad = gamepad
-        self._current_ctrl = mpc_controller.MPCController
+        self._current_ctrl = pose_controller.PoseController
         if self._gamepad:
             gamepad = xbox_one_pad.XboxGamepad()
             self._command_function = gamepad.get_command
         # create simulation
-        self._create_simulation(False, pybullet_client, robot_model, mark, self._current_ctrl, "random", None)
+        self._create_simulation(False, pybullet_client, robot_model, mark, self._current_ctrl, "plane", None)
 
     def _create_simulation(self, record_video, pybullet_client, robot_model,
                            mark, controller_class, terrain_type, terrain_id):

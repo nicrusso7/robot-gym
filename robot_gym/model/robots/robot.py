@@ -156,6 +156,8 @@ class Robot:
                 angle = self._constants.INIT_MOTOR_ANGLES[i] + self._constants.UPPER_LEG_JOINT_OFFSET
             elif self._constants.LOWER_JOINTS_PATTERN in name:
                 angle = self._constants.INIT_MOTOR_ANGLES[i] + self._constants.LOWER_LEG_JOINT_OFFSET
+            elif self._constants.ARM_JOINTS_PATTERN in name:
+                angle = self._constants.INIT_MOTOR_ANGLES[i]
             else:
                 raise ValueError("The name %s is not recognized as a motor joint." %
                                  name)

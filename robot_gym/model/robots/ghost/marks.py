@@ -2,7 +2,7 @@ MARK_LIST = ['1']
 
 MARK_PARAMS = {
     '1': {
-        'num_motors': 12,
+        'num_motors': 18,
         'num_legs': 4,
         'urdf_name': "robots/ghost.urdf",
         'motor_names': [
@@ -18,6 +18,12 @@ MARK_PARAMS = {
             "RL_hip_joint",
             "RL_upper_joint",
             "RL_lower_joint",
+            "motor_arm_0",
+            "motor_arm_1",
+            "motor_arm_2",
+            "motor_arm_3",
+            "motor_arm_4",
+            "motor_arm_5"
         ],
         'arm': [
             "motor_arm_0",
@@ -27,7 +33,7 @@ MARK_PARAMS = {
             "motor_arm_4",
             "motor_arm_5"
         ],
-        'arm_gripper': 'arm_section_5',
+        'arm_gripper': 'arm_gripper',
         'hardware': {
             'camera': {
                 'default': 0,
