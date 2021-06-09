@@ -10,25 +10,38 @@ class ArmController(Controller):
     def __init__(self, robot, get_time_since_reset):
         super(ArmController, self).__init__(robot, get_time_since_reset)
         self._end_effector_target = robot.get_end_effector_position()
+        self._rest = False
 
     def setup_ui_params(self, pybullet_client):
         end_eff_x = pybullet_client.addUserDebugParameter("arm_target_x", -1.0, 1.0, self._end_effector_target[0])
         end_eff_y = pybullet_client.addUserDebugParameter("arm_target_y", -1.0, 1.0, self._end_effector_target[1])
         end_eff_z = pybullet_client.addUserDebugParameter("arm_target_z", -1.0, 1.0, self._end_effector_target[2])
-        return end_eff_x, end_eff_y, end_eff_z
+        rest_pose = pybullet_client.addUserDebugParameter("Arm rest pose", 0, -1, 0)
+        return end_eff_x, end_eff_y, end_eff_z, rest_pose
 
     def read_ui_params(self, pybullet_client, ui):
-        end_eff_x, end_eff_y, end_eff_z = ui
-        return [
+        end_eff_x, end_eff_y, end_eff_z, rest_pose = ui
+        end_eff_target = [
             pybullet_client.readUserDebugParameter(end_eff_x),
             pybullet_client.readUserDebugParameter(end_eff_y),
-            pybullet_client.readUserDebugParameter(end_eff_z)
+            pybullet_client.readUserDebugParameter(end_eff_z),
         ]
+        rest = self._parse_rest_pose_param(rest_pose, pybullet_client)
+        return end_eff_target, rest
+
+    @staticmethod
+    def _parse_rest_pose_param(ui, pybullet_client):
+        rest_flag = pybullet_client.readUserDebugParameter(ui)
+        if rest_flag % 2 != 0:
+            return True
+        return False
 
     def update_controller_params(self, params):
-        self._end_effector_target = params
+        self._end_effector_target, self._rest = params
 
     def get_action(self):
+        if self._rest:
+            return self._robot.GetConstants().INIT_MOTOR_ANGLES
         return self._calculate_accurate_ik(self._robot.pybullet_client, self._robot.GetRobotId, self._robot.arm_joints,
                                            self._robot.arm_gripper,
                                            self._end_effector_target)

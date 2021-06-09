@@ -100,7 +100,7 @@ class PoseController(Controller):
             rear_left_angles[0], rear_left_angles[1], rear_left_angles[2]
         ]
 
-        arm_signal = self._arm_ctrl.get_action()[12:]
-        signal.extend(arm_signal)
+        arm_signal = self._arm_ctrl.get_action()
+        signal.extend(arm_signal[12:])
 
         return signal

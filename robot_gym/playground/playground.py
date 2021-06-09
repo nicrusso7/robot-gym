@@ -11,7 +11,7 @@ from robot_gym.model.robots.ghost import ghost
 
 class Playground:
 
-    def __init__(self, robot_model, mark, record_video, gamepad=False, pybullet_client=None):
+    def __init__(self, robot_model, mark, record_video=False, gamepad=False, pybullet_client=None):
         self._robot_model = robot_model
         self._mark = mark
         self._record_video = record_video
@@ -115,9 +115,10 @@ class Playground:
             action = self._sim.controller.get_action()
             # apply action to robot
             self._sim.ApplyStepAction(action)
-            # if self.is_falling():
-            #     # robot is falling down, reset the simulation.
-            #     self._reset(None)
+            if self.is_falling() and \
+                    self._current_ctrl.MOTOR_CONTROL_MODE is mpc_controller.MPCController.MOTOR_CONTROL_MODE:
+                # robot is falling down, reset the simulation.
+                self._reset(None)
             current_time = self._sim.GetTimeSinceReset()
             expected_duration = current_time - start_time_robot
             actual_duration = time.time() - start_time_wall
