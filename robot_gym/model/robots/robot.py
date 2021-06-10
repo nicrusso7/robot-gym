@@ -42,6 +42,7 @@ class Robot:
         self.ReceiveObservation()
         # build locomotion motor model
         self._motor_model = self.GetMotorClass()(
+            robot_const=self._constants,
             kp=self.GetMotorConstants().MOTOR_POSITION_GAINS,
             kd=self.GetMotorConstants().MOTOR_VELOCITY_GAINS,
             motor_control_mode=motor_control_mode,

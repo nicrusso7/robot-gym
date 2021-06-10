@@ -16,7 +16,7 @@ class Playground:
         self._mark = mark
         self._record_video = record_video
         self._gamepad = gamepad
-        self._current_ctrl = pose_controller.PoseController
+        self._current_ctrl = mpc_controller.MPCController
         if self._gamepad:
             gamepad = xbox_one_pad.XboxGamepad()
             self._command_function = gamepad.get_command

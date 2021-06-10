@@ -16,12 +16,13 @@ class Kinematics:
           link_id: The link id as returned from loadURDF.
         Returns:
           The 3 x N transposed Jacobian matrix. where N is the total DoFs of the
-          robot. For a _quadruped, the first 6 columns of the matrix corresponds to
+          robot. For a quadruped, the first 6 columns of the matrix corresponds to
           the CoM translation and rotation. The columns corresponds to a leg can be
           extracted with indices [6 + leg_id * 3: 6 + leg_id * 3 + 3].
         """
         all_joint_angles = [state[0] for state in self._robot.GetJointStates]
-        # add arm joints, if any
+        # all_joint_angles = all_joint_angles[:12]
+        # # add arm joints, if any
         # all_joint_angles.extend([0] * len(self._robot.arm_joints))
         zero_vec = [0] * len(all_joint_angles)
         jv, _ = self._pybullet_client.calculateJacobian(self._robot.GetRobotId, link_id,
@@ -44,7 +45,7 @@ class Kinematics:
         jv = self.ComputeJacobian(leg_id)
         all_motor_torques = np.matmul(contact_force, jv)
         motor_torques = {}
-        motors_per_leg = self._robot.GetMotorConstants().NUM_MOTORS // self._robot.GetConstants().NUM_LEG
+        motors_per_leg = 3
         com_dof = 6
         for joint_id in range(leg_id * motors_per_leg,
                               (leg_id + 1) * motors_per_leg):
@@ -115,7 +116,7 @@ class Kinematics:
         """Calculate the joint positions from the end effector position."""
         assert len(self._robot.GetFootLinkIds) == self._robot.GetConstants().NUM_LEG
         toe_id = self._robot.GetFootLinkIds[leg_id]
-        motors_per_leg = self._robot.num_motors // self._robot.GetConstants().NUM_LEG
+        motors_per_leg = 3
         joint_position_idxs = [
             i for i in range(leg_id * motors_per_leg, leg_id * motors_per_leg +
                              motors_per_leg)

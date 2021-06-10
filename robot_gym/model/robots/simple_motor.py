@@ -34,11 +34,13 @@ class RobotMotorModel:
     """
 
     def __init__(self,
+                 robot_const,
                  num_motors,
                  kp,
                  kd,
                  torque_limits=None,
                  motor_control_mode=MOTOR_CONTROL_POSITION):
+        self._robot_const = robot_const
         self._num_motors = num_motors
         self._kp = kp
         self._kd = kd
@@ -119,6 +121,7 @@ class RobotMotorModel:
         kp = None
         kd = None
         additional_torques = np.full(self._num_motors, 0)
+        arm_cmd = None
         if motor_control_mode is MOTOR_CONTROL_POSITION:
             assert len(motor_commands) == self._num_motors
             kp = self._kp
@@ -127,8 +130,17 @@ class RobotMotorModel:
             desired_motor_velocities = np.full(self._num_motors, 0)
         elif motor_control_mode is MOTOR_CONTROL_HYBRID:
             motor_commands = motor_commands[0]
-            # The input should be a 60 dimension vector
-            assert len(motor_commands) == MOTOR_COMMAND_DIMENSION * self._num_motors
+            # The input should be a num_locomotion_joints (12) * 5 dimension vector
+            if len(motor_commands) != MOTOR_COMMAND_DIMENSION * self._num_motors:
+                motor_commands = motor_commands[:60]
+                motor_commands = np.append(motor_commands, [0] * 30)
+                arm_torque, _ = self.convert_to_torque(np.asarray(self._robot_const.INIT_MOTOR_ANGLES),
+                                                       motor_angle,
+                                                       motor_velocity,
+                                                       None,
+                                                       MOTOR_CONTROL_POSITION)
+                arm_cmd = arm_torque[12:]
+
             kp = motor_commands[POSITION_GAIN_INDEX::MOTOR_COMMAND_DIMENSION]
             kd = motor_commands[VELOCITY_GAIN_INDEX::MOTOR_COMMAND_DIMENSION]
             desired_motor_angles = motor_commands[
@@ -138,6 +150,8 @@ class RobotMotorModel:
             additional_torques = motor_commands[TORQUE_INDEX::MOTOR_COMMAND_DIMENSION]
         motor_torques = -1 * (kp * (motor_angle - desired_motor_angles)) - kd * (
                 motor_velocity - desired_motor_velocities) + additional_torques
+        if arm_cmd is not None:
+            motor_torques = np.append(motor_torques[:12], arm_cmd)
         motor_torques = self._strength_ratios * motor_torques
         if self._torque_limits is not None:
             if len(self._torque_limits) != len(motor_torques):
