@@ -386,7 +386,7 @@ class Robot:
         self._foot_link_ids.sort()
         self._leg_link_ids.sort()
         self._arm_link_ids.sort()
-
+        print(self._arm_link_ids_map)
         return
 
     def link_position_in_base_frame(self, link_id):

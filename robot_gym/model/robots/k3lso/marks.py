@@ -18,7 +18,22 @@ MARK_PARAMS = {
             "torso_to_abduct_hl_j",
             "abduct_hl_to_thigh_hl_j",
             "thigh_hl_to_knee_hl_j",
+            "motor_arm_0",
+            "motor_arm_1",
+            "motor_arm_2",
+            "motor_arm_3",
+            "motor_arm_4",
+            "motor_arm_5"
         ],
+        'arm': [
+            "motor_arm_0",
+            "motor_arm_1",
+            "motor_arm_2",
+            "motor_arm_3",
+            "motor_arm_4",
+            "motor_arm_5"
+        ],
+        'arm_gripper': 'TOP_1',
         'hardware': {
             'camera': {
                 'default': 0,

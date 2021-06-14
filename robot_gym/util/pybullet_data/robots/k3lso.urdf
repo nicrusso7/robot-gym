@@ -439,5 +439,335 @@
     <parent link="shank_hl_4"/>
     <child link="toe_hr_4"/>
   </joint>
+
+  <link name="arm_base_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="3.041253315481396e-05 3.5233638099900425e-06 0.034386377739529544"/>
+      <mass value="0.28897197894505794"/>
+      <inertia ixx="0.000561" ixy="-0.0" ixz="-0.0" iyy="0.000389" iyz="0.0" izz="0.000553"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="amber_b1/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="amber_b1/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="arm_base" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="arm_base_link"/>
+  </joint>
+
+  <link name="DOF1_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.00015960906550393172 -1.2427845014393095e-05 -0.030235806886676903"/>
+      <mass value="0.6510136315044379"/>
+      <inertia ixx="0.000498" ixy="0.0" ixz="-3e-06" iyy="0.000484" iyz="-0.0" izz="0.000407"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.0 -4e-06 -0.069966"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.0 -4e-06 -0.069966"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="DOF1_LINK_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="5.2085527568610045e-06 0.004977895400043735 0.07010343107502044"/>
+      <mass value="0.935292940405524"/>
+      <inertia ixx="0.001224" ixy="-0.0" ixz="-0.0" iyy="0.001136" iyz="-4.3e-05" izz="0.00072"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.0 -4e-06 -0.074366"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF1_LINK_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.0 -4e-06 -0.074366"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF1_LINK_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="DOF2_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-3.1921216491684105e-08 -0.011679501464314974 0.04696474149032967"/>
+      <mass value="0.5984706718739643"/>
+      <inertia ixx="0.001836" ixy="0.0" ixz="-0.0" iyy="0.001772" iyz="-0.000265" izz="0.000381"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.0 0.024996 -0.155566"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF2_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 0.024996 -0.155566"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF2_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="DOF3_MOTOR_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="7.926931010823914e-05 3.749110346027253e-05 -0.0313458911509952"/>
+      <mass value="0.5847003223149023"/>
+      <inertia ixx="0.000404" ixy="0.0" ixz="2e-06" iyy="0.00039" iyz="1e-06" izz="0.000324"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.0 -0.000504 -0.278463"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF3_MOTOR_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 -0.000504 -0.278463"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF3_MOTOR_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="DOF3_LINK_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-5.21122742451035e-06 -0.004978087820401388 0.07040264166980847"/>
+      <mass value="0.935292940405524"/>
+      <inertia ixx="0.001224" ixy="-0.0" ixz="0.0" iyy="0.001136" iyz="4.3e-05" izz="0.00072"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.0 -0.000504 -0.283463"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF3_LINK_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 -0.000504 -0.283463"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF3_LINK_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="DOF4_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="2.9261458020017447e-08 0.011679309041134928 0.04696395208618592"/>
+      <mass value="0.5984706718739643"/>
+      <inertia ixx="0.001836" ixy="0.0" ixz="0.0" iyy="0.001772" iyz="0.000265" izz="0.000381"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.0 -0.025504 -0.364963"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF4_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 -0.025504 -0.364963"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF4_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="DOF5_MOTOR_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-7.92719712862473e-05 -3.768352768190082e-05 -0.0313456805561112"/>
+      <mass value="0.5847003223149023"/>
+      <inertia ixx="0.000404" ixy="0.0" ixz="-2e-06" iyy="0.00039" iyz="-1e-06" izz="0.000324"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.0 -4e-06 -0.487859"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF5_MOTOR_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.0 -4e-06 -0.487859"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF5_MOTOR_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="DOF5_link_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="5.208648522717918e-06 0.004977895391692929 0.07010285226492913"/>
+      <mass value="0.935292940405524"/>
+      <inertia ixx="0.001224" ixy="-0.0" ixz="-0.0" iyy="0.001136" iyz="-4.3e-05" izz="0.00072"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.0 -4e-06 -0.492859"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF5_link_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.0 -4e-06 -0.492859"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF5_link_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="DOF6_LINK_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-3.17560020832447e-08 -0.011679501474184246 0.04696416267915482"/>
+      <mass value="0.5984706718739643"/>
+      <inertia ixx="0.001836" ixy="0.0" ixz="-0.0" iyy="0.001772" iyz="-0.000265" izz="0.000381"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.0 0.024996 -0.574059"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF6_LINK_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.0 0.024996 -0.574059"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF6_LINK_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="DOF7_MOTOR_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="7.926952865318467e-05 3.749109242478111e-05 -0.03134546996129095"/>
+      <mass value="0.5847003223149023"/>
+      <inertia ixx="0.000404" ixy="0.0" ixz="2e-06" iyy="0.00039" iyz="1e-06" izz="0.000324"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.0 -0.000504 -0.696955"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF7_MOTOR_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 -0.000504 -0.696955"/>
+      <geometry>
+        <mesh filename="amber_b1/DOF7_MOTOR_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="TOP_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-4.963925281376204e-07 -0.00019582783329597517 0.01611980646593192"/>
+      <mass value="0.15302388632599126"/>
+      <inertia ixx="4.6e-05" ixy="0.0" ixz="0.0" iyy="5e-05" iyz="0.0" izz="5.5e-05"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.0 -0.000504 -0.701955"/>
+      <geometry>
+        <mesh filename="amber_b1/TOP_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 -0.000504 -0.701955"/>
+      <geometry>
+        <mesh filename="amber_b1/TOP_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="Rigid1" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 4e-06 0.069966"/>
+    <parent link="arm_base_link"/>
+    <child link="DOF1_1"/>
+  </joint>
+
+  <joint name="motor_arm_0" type="continuous">
+    <origin rpy="0 0 0" xyz="0.0 4e-06 0.074366"/>
+    <parent link="arm_base_link"/>
+    <child link="DOF1_LINK_1"/>
+    <axis xyz="0.0 0.0 1.0"/>
+  </joint>
+
+  <joint name="motor_arm_1" type="continuous">
+    <origin rpy="0 0 0" xyz="-0.0 -0.025 0.0812"/>
+    <parent link="DOF1_LINK_1"/>
+    <child link="DOF2_1"/>
+    <axis xyz="0.0 1.0 -0.0"/>
+  </joint>
+
+  <joint name="Rigid5" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 0.0255 0.122897"/>
+    <parent link="DOF2_1"/>
+    <child link="DOF3_MOTOR_1"/>
+  </joint>
+
+  <joint name="motor_arm_2" type="continuous">
+    <origin rpy="0 0 0" xyz="0.0 0.0255 0.127897"/>
+    <parent link="DOF2_1"/>
+    <child link="DOF3_LINK_1"/>
+    <axis xyz="0.0 -0.0 -1.0"/>
+  </joint>
+
+  <joint name="motor_arm_3" type="continuous">
+    <origin rpy="0 0 0" xyz="0.0 0.025 0.0815"/>
+    <parent link="DOF3_LINK_1"/>
+    <child link="DOF4_1"/>
+    <axis xyz="0.0 -1.0 -0.0"/>
+  </joint>
+
+  <joint name="Rigid8" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 -0.0255 0.122896"/>
+    <parent link="DOF4_1"/>
+    <child link="DOF5_MOTOR_1"/>
+  </joint>
+
+  <joint name="motor_arm_4" type="continuous">
+    <origin rpy="0 0 0" xyz="0.0 -0.0255 0.127896"/>
+    <parent link="DOF4_1"/>
+    <child link="DOF5_link_1"/>
+    <axis xyz="-0.0 0.0 -1.0"/>
+  </joint>
+
+  <joint name="motor_arm_5" type="continuous">
+    <origin rpy="0 0 0" xyz="0.0 -0.025 0.0812"/>
+    <parent link="DOF5_link_1"/>
+    <child link="DOF6_LINK_1"/>
+    <axis xyz="0.0 1.0 0.0"/>
+  </joint>
+
+  <joint name="Rigid11" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.0 0.0255 0.122896"/>
+    <parent link="DOF6_LINK_1"/>
+    <child link="DOF7_MOTOR_1"/>
+  </joint>
+
+  <joint name="Rigid12" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.0 0.0255 0.127896"/>
+    <parent link="DOF6_LINK_1"/>
+    <child link="TOP_1"/>
+  </joint>
 </robot>
 
