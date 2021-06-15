@@ -33,7 +33,7 @@ MARK_PARAMS = {
             "motor_arm_4",
             "motor_arm_5"
         ],
-        'arm_gripper': 'DOF6_LINK_1',
+        'arm_gripper': 'arm_gripper',
         'hardware': {
             'camera': {
                 'default': 0,

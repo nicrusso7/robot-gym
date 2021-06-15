@@ -9,14 +9,9 @@ DEFAULT_ABDUCTION_ANGLE = 0
 DEFAULT_HIP_ANGLE = 0.67
 DEFAULT_KNEE_ANGLE = -1.25
 
-# ARM_REST_MOTOR_ANGLES = np.array([
-#         -1.57, 0., 0.,
-#         0., 0., 0.
-#     ])
-
 ARM_REST_MOTOR_ANGLES = np.array([
-        0., -1.57, 0.,
-        -1.57, 0., 1.57
+        -1.57, 0., 0.,
+        0., 0., 0.
     ])
 
 LEG_STAND_MOTOR_ANGLES = np.array(
