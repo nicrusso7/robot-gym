@@ -139,7 +139,10 @@ class Robot:
         x, y, z = self._constants.START_POS
         start_position = [x, y, z + self._z_offset]
         return self._pybullet_client.loadURDF(
-            f"{pybullet_data.getDataPath()}/{self._marks.MARK_PARAMS[self._mark]['urdf_name']}", start_position)
+            f"{pybullet_data.getDataPath()}/{self._marks.MARK_PARAMS[self._mark]['urdf_name']}", start_position
+            # TODO Uncomment when u'll use a real robot
+            # ,flags=pybullet.URDF_USE_SELF_COLLISION
+        )
 
     def ResetPose(self):
         for name in self._joint_name_to_id:
