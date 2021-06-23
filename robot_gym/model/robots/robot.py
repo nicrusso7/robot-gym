@@ -1,17 +1,22 @@
+import gym
 import numpy as np
+from gibson2.external.pybullet_tools.utils import joints_from_names, set_joint_positions
 
 from robot_gym.model.equipment import camera
 from robot_gym.util import pybullet_data
 
+from gibson2.robots.robot_locomotor import LocomotorRobot
 
-class Robot:
+
+class Robot(LocomotorRobot):
 
     def __init__(self,
                  pybullet_client,
                  mark,
                  simulation,
                  motor_control_mode,
-                 z_offset=0.
+                 z_offset=0.,
+                 load_model=True
                  ):
 
         self._pybullet_client = pybullet_client
@@ -30,26 +35,25 @@ class Robot:
         self._motor_enabled_list = self.GetMotorConstants().MOTOR_ENABLED
         self._motor_offset = self.GetMotorConstants().MOTOR_OFFSET
         self._motor_direction = self.GetMotorConstants().MOTOR_DIRECTION
-        # load robot urdf
-        self._quadruped = self._load_urdf()
-        # build joints dict
-        self._BuildJointNameToIdDict()
-        self._BuildUrdfIds()
-        self._BuildMotorIdList()
-        # set robot init pose
-        self.ResetPose()
-        # fetch joints' states
-        self.ReceiveObservation()
-        # build locomotion motor model
-        self._motor_model = self.GetMotorClass()(
-            robot_const=self._constants,
-            kp=self.GetMotorConstants().MOTOR_POSITION_GAINS,
-            kd=self.GetMotorConstants().MOTOR_VELOCITY_GAINS,
-            motor_control_mode=motor_control_mode,
-            num_motors=self._num_motors
-        )
-        # robot equipment
-        self._load_equipment()
+        self._motor_control_mode = motor_control_mode
+        if load_model:
+            # load robot urdf
+            self._quadruped = self._load_urdf()
+            self.init_robot()
+        # init gibson model
+        model_file = f"{self._marks.MARK_PARAMS[self._mark]['urdf_name']}"
+        self._mpc_dim = 12
+        self._arm_dim = 6
+        self._mpc_limit = 0.6
+        self._arm_limit = 0.6
+        LocomotorRobot.__init__(self,
+                                model_file,
+                                action_dim=self._mpc_dim + self._arm_dim,
+                                is_discrete=False,
+                                control="torque",
+                                self_collision=False)
+        self.physics_model_dir = f"{pybullet_data.getDataPath()}"
+        # self.time_step = 0.001
 
     @property
     def num_legs(self):
@@ -75,11 +79,90 @@ class Robot:
     def equipment(self):
         return self._equip
 
-    def set_up_discrete_action_space(self):
-        pass
+    def init_robot(self):
+        # build joints dict
+        self._BuildJointNameToIdDict()
+        self._BuildUrdfIds()
+        self._BuildMotorIdList()
+        # set robot init pose
+        self.ResetPose()
+        # fetch joints' states
+        self.ReceiveObservation()
+        # build locomotion motor model
+        self._motor_model = self.GetMotorClass()(
+            robot_const=self._constants,
+            kp=self.GetMotorConstants().MOTOR_POSITION_GAINS,
+            kd=self.GetMotorConstants().MOTOR_VELOCITY_GAINS,
+            motor_control_mode=self._motor_control_mode,
+            num_motors=self._num_motors
+        )
+        # robot equipment
+        self._load_equipment()
 
     def set_up_continuous_action_space(self):
-        pass
+        """
+        Set up continuous action space
+        """
+        self.action_high = np.array([self._mpc_limit] * self._mpc_dim +
+                                    [self._arm_limit] * self._arm_dim)
+        self.action_low = -self.action_high
+        self.action_space = gym.spaces.Box(shape=(self.action_dim,),
+                                           low=-0.6,
+                                           high=0.6,
+                                           dtype=np.float32)
+
+    def set_up_discrete_action_space(self):
+        """
+        Set up discrete action space
+        """
+        assert False, "Fetch does not support discrete actions"
+
+    # def apply_robot_action(self, action):
+        # print(f"Action: vx={action[0]}, wz={action[1]}")
+        # self._simulation.controller.update_controller_params((0, 0))
+        # action = self._simulation.controller.get_action()
+        # print(f'hybrid action= {action}')
+
+        # action = self.ApplyAction(self._constants.INIT_MOTOR_ANGLES, 1, True)
+        # print(f'torque action= {action}')
+        # super().apply_robot_action(action)
+
+        # self.ResetPose()
+        # self._simulation.ApplyStepAction(self._constants.INIT_MOTOR_ANGLES)
+
+    # def robot_specific_reset(self):
+    #     """
+    #     We need to override the super method where joints velocities are set to 0.
+    #     """
+    #     pass
+        # super(Robot, self).robot_specific_reset()
+
+        # roll the arm to its body
+        # robot_id = self.robot_ids[0]
+        # arm_joints = joints_from_names(robot_id,
+        #                                self._arm_motors_names)
+        #
+        # rest_position = self._constants.ARM_REST_MOTOR_ANGLES
+        # # might be a better pose to initiate manipulation
+        # # rest_position = (0.30322468280792236, -1.414019864768982,
+        # #                  1.5178184935241699, 0.8189625336474915,
+        # #                  2.200358942909668, 2.9631312579803466,
+        # #                  -1.2862852996643066, 0.0008453550418615341)
+        #
+        # set_joint_positions(robot_id, arm_joints, rest_position)
+        # self._simulation.SettleRobotDownForReset(reset_time=1.0)
+
+    def get_end_effector_position(self):
+        """
+        Get end-effector position
+        """
+        return self.parts['gripper_link'].get_position()
+
+    def end_effector_part_index(self):
+        """
+        Get end-effector link id
+        """
+        return self.parts['gripper_link'].body_part_index
 
     def GetBasePosition(self):
         """Get the position of Rex's base.
@@ -293,9 +376,10 @@ class Robot:
         observation.extend(self.GetTrueBaseRollPitchYawRate())
         return observation
 
-    def ApplyAction(self, motor_commands, motor_control_mode):
+    def ApplyAction(self, motor_commands, motor_control_mode, return_torque=False):
         """Apply the motor commands using the motor model.
         Args:
+          return_torque:
           motor_commands: np.array. Can be motor angles, torques, hybrid commands
           motor_control_mode: A MotorControlMode enum.
         """
@@ -324,6 +408,8 @@ class Robot:
             else:
                 motor_ids.append(motor_id)
                 motor_torques.append(0)
+        if return_torque:
+            return motor_torques
         self._SetMotorTorqueByIds(motor_ids, motor_torques)
 
     def _SetMotorTorqueByIds(self, motor_ids, torques):
@@ -389,7 +475,6 @@ class Robot:
         self._foot_link_ids.sort()
         self._leg_link_ids.sort()
         self._arm_link_ids.sort()
-        print(self._arm_link_ids_map)
         return
 
     def link_position_in_base_frame(self, link_id):

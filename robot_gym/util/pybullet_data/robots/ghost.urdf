@@ -13,7 +13,7 @@
     <color rgba="0.7 0.7 0.7 1.0"/>
   </material>
 
-  <link name="trunk">
+  <link name="base_link">
     <visual>
       <origin rpy="0 0 -1.5708" xyz="0 0 0"/>
       <geometry>
@@ -69,7 +69,7 @@
 
   <joint name="FR_hip_joint" type="continuous">
     <axis xyz="1 0 0"/>
-    <parent link="trunk"/>
+    <parent link="base_link"/>
     <child link="FR_hip"/>
     <origin rpy="1.57079 0 3.14159" xyz="0.22 -0.06 0.0"/>
     <limit effort="100" velocity="100"/>
@@ -210,7 +210,7 @@
 
   <joint name="FL_hip_joint" type="continuous">
     <axis xyz="1 0 0"/>
-    <parent link="trunk"/>
+    <parent link="base_link"/>
     <child link="FL_hip"/>
     <origin rpy="-1.57079 0 3.14159" xyz="0.22 0.06 0.0"/>
     <limit effort="100" velocity="100"/>
@@ -355,7 +355,7 @@
 
   <joint name="RR_hip_joint" type="continuous">
     <axis xyz="1 0 0"/>
-    <parent link="trunk"/>
+    <parent link="base_link"/>
     <child link="RR_hip"/>
     <origin rpy="1.57079 0 3.14159" xyz="-0.22 -0.06 0.0"/>
     <limit effort="100" velocity="100"/>
@@ -495,7 +495,7 @@
 
   <joint name="RL_hip_joint" type="continuous">
     <axis xyz="1 0 0"/>
-    <parent link="trunk"/>
+    <parent link="base_link"/>
     <child link="RL_hip"/>
     <origin rpy="-1.57079 0 3.14159" xyz="-0.22 0.06 0.0"/>
     <limit effort="100" velocity="100"/>
@@ -631,7 +631,7 @@
 
   <joint name="arm_base" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.1"/>
-    <parent link="trunk"/>
+    <parent link="base_link"/>
     <child link="arm_base_link"/>
   </joint>
 
@@ -802,4 +802,49 @@
     <child link="arm_gripper"/>
     <axis xyz="-1.0 0.0 -0.0"/>
   </joint>
+
+  <!-- Equipment -->
+  <link name="eyes">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link>
+  <joint name="eye_joint" type="fixed">
+   <origin rpy="0 0 0" xyz="0.1 0 0.1"/>
+    <parent link="base_link"/>
+    <child link="eyes"/>
+  </joint>
+
+  <link name="laser_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.0306228970175641 0.0007091682908278 0.0551974119471302" />
+      <mass value="0.00833634573995571" />
+      <inertia ixx="1.01866461240801E-06" ixy="-5.88447626567756E-08" ixz="7.83857244757914E-08" iyy="5.10039589974707E-07" iyz="-7.12664289617235E-09" izz="1.28270671527309E-06" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="laser/laser_link.obj" />
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="laser/laser_link.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="laser_joint" type="fixed">
+    <origin rpy="3.14159265359 0 0" xyz="0.0 0 -0.1" />
+    <parent link="base_link" />
+    <child link="laser_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
 </robot>
