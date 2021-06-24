@@ -43,7 +43,7 @@ initial_pos_z_offset: 0.1
 collision_ignore_link_a_ids: []  # ignore collisions with these robot links
 
 # sensor spec
-output: [task_obs, rgb, depth, scan]
+output: [task_obs]
 # image
 # Primesense Carmine 1.09 short-range RGBD sensor
 # http://xtionprolive.com/primesense-carmine-1.09

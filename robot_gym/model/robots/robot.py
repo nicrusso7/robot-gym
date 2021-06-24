@@ -53,7 +53,8 @@ class Robot(LocomotorRobot):
                                 control="torque",
                                 self_collision=False)
         self.physics_model_dir = f"{pybullet_data.getDataPath()}"
-        # self.time_step = 0.001
+        self._joint_name_to_id = None
+        self.change = True
 
     @property
     def num_legs(self):
@@ -118,51 +119,111 @@ class Robot(LocomotorRobot):
         assert False, "Fetch does not support discrete actions"
 
     # def apply_robot_action(self, action):
-        # print(f"Action: vx={action[0]}, wz={action[1]}")
-        # self._simulation.controller.update_controller_params((0, 0))
-        # action = self._simulation.controller.get_action()
-        # print(f'hybrid action= {action}')
+    # print(f"Action: vx={action[0]}, wz={action[1]}")
+    # self._simulation.controller.update_controller_params((0, 0))
+    # action = self._simulation.controller.get_action()
+    # print(f'hybrid action= {action}')
 
-        # action = self.ApplyAction(self._constants.INIT_MOTOR_ANGLES, 1, True)
-        # print(f'torque action= {action}')
-        # super().apply_robot_action(action)
+    # action = self.ApplyAction(self._constants.INIT_MOTOR_ANGLES, 1, True)
+    # print(f'torque action= {action}')
+    # super().apply_robot_action(action)
 
-        # self.ResetPose()
-        # self._simulation.ApplyStepAction(self._constants.INIT_MOTOR_ANGLES)
+    # self.ResetPose()
+    # self._simulation.ApplyStepAction(self._constants.INIT_MOTOR_ANGLES)
 
     # def robot_specific_reset(self):
     #     """
     #     We need to override the super method where joints velocities are set to 0.
     #     """
     #     pass
-        # super(Robot, self).robot_specific_reset()
+    # super(Robot, self).robot_specific_reset()
 
-        # roll the arm to its body
-        # robot_id = self.robot_ids[0]
-        # arm_joints = joints_from_names(robot_id,
-        #                                self._arm_motors_names)
-        #
-        # rest_position = self._constants.ARM_REST_MOTOR_ANGLES
-        # # might be a better pose to initiate manipulation
-        # # rest_position = (0.30322468280792236, -1.414019864768982,
-        # #                  1.5178184935241699, 0.8189625336474915,
-        # #                  2.200358942909668, 2.9631312579803466,
-        # #                  -1.2862852996643066, 0.0008453550418615341)
-        #
-        # set_joint_positions(robot_id, arm_joints, rest_position)
-        # self._simulation.SettleRobotDownForReset(reset_time=1.0)
+    # roll the arm to its body
+    # robot_id = self.robot_ids[0]
+    # arm_joints = joints_from_names(robot_id,
+    #                                self._arm_motors_names)
+    #
+    # rest_position = self._constants.ARM_REST_MOTOR_ANGLES
+    # # might be a better pose to initiate manipulation
+    # # rest_position = (0.30322468280792236, -1.414019864768982,
+    # #                  1.5178184935241699, 0.8189625336474915,
+    # #                  2.200358942909668, 2.9631312579803466,
+    # #                  -1.2862852996643066, 0.0008453550418615341)
+    #
+    # set_joint_positions(robot_id, arm_joints, rest_position)
+    # self._simulation.SettleRobotDownForReset(reset_time=1.0)
 
     def get_end_effector_position(self):
         """
         Get end-effector position
         """
-        return self.parts['gripper_link'].get_position()
+        if self.parts is None:
+            return -1
+        return self.parts['arm_gripper'].get_position()
 
     def end_effector_part_index(self):
         """
         Get end-effector link id
         """
-        return self.parts['gripper_link'].body_part_index
+        if self.parts is None:
+            return -1
+        return self.parts['arm_gripper'].body_part_index
+
+    # gibson minitaur ----------------------------------------------------------------
+    def robot_specific_reset(self, reload_urdf=True):
+        """Reset the minitaur to its initial states.
+        :param reload_urdf: whether to reload the urdf file. If not, reset() just place the minitaur back to its starting position.
+        """
+        if self._quadruped is None:
+            self._quadruped = self.robot_ids[0]
+
+        if self._joint_name_to_id is None:
+            self.init_robot()
+            # TODO
+            # if self.on_rack:
+            # p.createConstraint(self.minitaur, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
+            #                    [0, 0, 1])
+
+        self.ResetPose()
+
+    def apply_action(self, motor_commands):
+        # print(f'motor={motor_commands}')
+        action = [0., 0.67, -1.25, 0., 0.67, -1.25, 0., 0.67, -1.25, 0., 0.67, -1.25,
+                  -1.57, 0., 0., 0., 0., 0.]
+        # if self.change:
+        #     action = [0., 0.67, -1.25, 0., 0.67, -1.25, 0., 0.67, -1.25, 0., 0.67, -1.25,
+        #           0., 0., 0., 0., 0., 0.]
+        #     self.change = False
+        # else:
+        #     self.change = True
+        # for name in self._joint_name_to_id:
+        #     joint_id = self._joint_name_to_id[name]
+        #     self._pybullet_client.setJointMotorControl2(
+        #         bodyIndex=self._quadruped,
+        #         jointIndex=joint_id,
+        #         controlMode=self._pybullet_client.VELOCITY_CONTROL,
+        #         targetVelocity=0,
+        #         force=0)
+        self._simulation.ApplyStepAction(action)
+
+    def load(self):
+        """
+        Load the robot model into pybullet
+
+        :return: body id in pybullet
+        """
+        if self.model_type == "URDF":
+            self._quadruped = self._load_urdf()
+            self.init_robot()
+            self.robot_ids = (self._quadruped,)
+
+        self.parts, self.jdict, self.ordered_joints, self.robot_body, self.robot_mass = self.parse_robot(
+            self.robot_ids)
+
+        assert "eyes" in self.parts, 'Please add a link named "eyes" in your robot URDF file with the same pose as the onboard camera. Feel free to check out assets/models/turtlebot/turtlebot.urdf for an example.'
+        self.eyes = self.parts["eyes"]
+
+        return self.robot_ids
 
     def GetBasePosition(self):
         """Get the position of Rex's base.
@@ -223,7 +284,7 @@ class Robot(LocomotorRobot):
         start_position = [x, y, z + self._z_offset]
         return self._pybullet_client.loadURDF(
             f"{pybullet_data.getDataPath()}/{self._marks.MARK_PARAMS[self._mark]['urdf_name']}", start_position
-            # TODO Uncomment when u'll use a real robot
+            # TODO Uncomment when u'll use a proper robot
             # ,flags=pybullet.URDF_USE_SELF_COLLISION
         )
 
@@ -525,7 +586,7 @@ class Robot(LocomotorRobot):
     def get_default_camera(self):
         return self._equip["cams"][self._equip["default_cam"]]
 
-    def get_end_effector_position(self):
-        if self._arm_gripper is not "":
-            return self.pybullet_client.getLinkState(self._quadruped, self.arm_gripper)[4]
-        return [0, 0, 0]
+    # def get_end_effector_position(self):
+    #     if self._arm_gripper is not "":
+    #         return self.pybullet_client.getLinkState(self._quadruped, self.arm_gripper)[4]
+    #     return [0, 0, 0]
