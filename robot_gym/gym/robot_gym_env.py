@@ -82,7 +82,7 @@ class RobotGymEnv(gym.Env, ABC):
         print("reset simulation")
         self.simulation.reset()
 
-        if self.simulation.terrain.terrain_type is not "plane":
+        if self.simulation.terrain.terrain_type is not "plane" and self.simulation.terrain.terrain_type is not None:
             self.simulation.terrain.update_terrain()
 
         if "position" in kwargs:
