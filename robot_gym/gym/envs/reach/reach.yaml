@@ -39,11 +39,11 @@ max_step: 500
 max_collisions_allowed: 500
 
 # misc config
-initial_pos_z_offset: 0.1
+initial_pos_z_offset: 0.001 # z offset is already given during model setup, set a low number here.
 collision_ignore_link_a_ids: []  # ignore collisions with these robot links
 
 # sensor spec
-output: [task_obs]
+output: [task_obs, rgb, depth, scan]
 # image
 # Primesense Carmine 1.09 short-range RGBD sensor
 # http://xtionprolive.com/primesense-carmine-1.09

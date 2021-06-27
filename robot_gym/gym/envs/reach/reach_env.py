@@ -8,6 +8,10 @@ from gibson2.scenes.empty_scene import EmptyScene
 from gibson2.scenes.gibson_indoor_scene import StaticIndoorScene
 from gibson2.scenes.igibson_indoor_scene import InteractiveIndoorScene
 from gibson2.scenes.stadium_scene import StadiumScene
+
+from robot_gym.controllers.mpc import mpc_controller
+from robot_gym.core import sim_constants
+
 from robot_gym.controllers.pose import pose_controller
 
 from robot_gym.model.robots.ghost import ghost
@@ -22,6 +26,7 @@ class ReachEnv(iGibsonEnv):
                  robot_model,
                  mark,
                  controller_class,
+                 config,
                  debug=False,
                  policy=False,
                  render=False,
@@ -35,11 +40,34 @@ class ReachEnv(iGibsonEnv):
         self._robot_model = robot_model
         self._mark = mark
         self._controller_class = controller_class
+        self._config = config
         self._debug = debug
         self._run_policy = policy
-        super().__init__("reach.yaml", mode=mode
-                         , action_timestep=0.001, physics_timestep=0.001
-                         )
+        super().__init__(self._config, mode=mode, action_timestep=sim_constants.SIMULATION_TIME_STEP,
+                         physics_timestep=sim_constants.SIMULATION_TIME_STEP)
+        if self._debug:
+            self._ui = self._setup_ui_parameters()
+
+    def _setup_ui_parameters(self):
+        ui = {
+            # controller ui params
+            "ctrl_ui": self._base_sim.controller.setup_ui_params(self._base_sim.pybullet_client),
+            # sim ui params
+            "sim_ui": self._base_sim.setup_ui_parameters(),
+        }
+        return ui
+
+    def step(self, action):
+        if self._debug and not self._base_sim.read_ui_parameters(self._ui) and not self._run_policy:
+            # overwrite agent action with UI input
+            action = self._read_inputs()
+        return super().step(action)
+
+    def _read_inputs(self):
+        return self._base_sim.controller.read_ui_params(
+            self._base_sim.pybullet_client,
+            self._ui["ctrl_ui"]
+        )
 
     def load(self):
         """
@@ -107,53 +135,42 @@ class ReachEnv(iGibsonEnv):
                                     sim_mode="base",
                                     pybullet_client=p)
 
-        self._base_sim._pybullet_client = p
+        self._base_sim.robot = self._robot_model(pybullet_client=p,
+                                                 mark=self._mark,
+                                                 simulation=self._base_sim,
+                                                 motor_control_mode=self._controller_class.MOTOR_CONTROL_MODE,
+                                                 load_model=False)
 
-        self._base_sim._robot = self._robot_model(pybullet_client=p,
-                                                  mark=self._mark,
-                                                  simulation=self._base_sim,
-                                                  motor_control_mode=self._controller_class.MOTOR_CONTROL_MODE,
-                                                  load_model=False)
-
-        # don't need arm, remove it from action space (if any).
-        # TODO read controller dimension and limit
-        self._base_sim._robot.action_high = np.array([0.5] * 2)
-        self._base_sim._robot.action_low = -self._base_sim._robot.action_high
-        self._base_sim._robot.action_space = gym.spaces.Box(shape=(2,),
-                                                            low=-0.5,
-                                                            high=0.5,
-                                                            dtype=np.float32)
         # TODO edit here to support multiple robots (e.g. multiple agents)
         self.robots = [self._base_sim._robot]
         for robot in self.robots:
             self.simulator.import_robot(robot)
         # TODO -----------------------------------------------------------
 
-        # # init robot
-        # self._base_sim.pybullet_client.resetBasePositionAndOrientation(
-        #     self._base_sim.robot.GetRobotId,
-        #     self._base_sim.robot.GetConstants().START_POS,
-        #     self._base_sim.pybullet_client.getQuaternionFromEuler(self._base_sim.robot.GetConstants().INIT_ORIENTATION)
-        # )
-        #
-        #
-        # # setup locomotion controller
-        self._base_sim._controller_obj = self._controller_class(self._base_sim._robot, self._base_sim.GetTimeSinceReset)
-        #
-        # self._base_sim.reset()
+        # setup locomotion controller
+        self._base_sim.controller = self._controller_class(self._base_sim.robot,
+                                                           self._base_sim.GetTimeSinceReset)
+
+        self._base_sim.reset()
+
+        action_high = self._base_sim.controller.ACTION_HIGH
+        # keep arm in rest position
+        action_dim = self._base_sim.controller.ACTION_DIM - 3
+        self._base_sim.robot.action_high = np.array([action_high] * action_dim)
+        self._base_sim.robot.action_low = -self._base_sim.robot.action_high
+        self._base_sim.robot.action_space = gym.spaces.Box(shape=(action_dim,),
+                                                           low=-action_high,
+                                                           high=action_high,
+                                                           dtype=np.float32)
 
         self.load_task_setup()
         self.load_observation_space()
         self.load_action_space()
         self.load_miscellaneous_variables()
 
-        # p.setPhysicsEngineParameter(numSolverIterations=30)
-        #
-        # p.setPhysicsEngineParameter(enableConeFriction=0)
-        #
-        # p.setTimeStep(0.001)
-        #
-        # p.setGravity(0, 0, -9.8)
+    def land(self, obj, pos, orn):
+        super().land(obj, pos, orn)
+        self._base_sim.robot.ResetPose()
 
     # def run_simulation(self):
     #     """
@@ -167,14 +184,10 @@ class ReachEnv(iGibsonEnv):
     #     collision_links = list(p.getContactPoints(
     #         bodyA=self.robots[0].robot_ids[0]))
     #     return self.filter_collision_links(collision_links)
-    def land(self, obj, pos, orn):
-        super().land(obj, pos, orn)
-        self._base_sim._robot.ResetPose()
-
 
 
 def main():
-    env = ReachEnv(ghost.Ghost, "1", pose_controller.PoseController, debug=True, render=True)
+    env = ReachEnv(ghost.Ghost, "1", mpc_controller.MPCController, "reach.yaml", debug=True, render=True)
     for j in range(1):
         env.reset()
         for i in range(10000):

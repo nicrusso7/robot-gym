@@ -34,6 +34,10 @@ class Simulation:
 
         if self._sim_mode == "full":
             self._init_full_mode(terrain_id, terrain_type, record_video, pybullet_client)
+        elif self._sim_mode == "base":
+            self._pybullet_client = pybullet_client
+        else:
+            raise Exception(f"Simulation mode {self._sim_mode} is not supported.")
 
     @property
     def pybullet_client(self):
@@ -43,9 +47,17 @@ class Simulation:
     def robot(self):
         return self._robot
 
+    @robot.setter
+    def robot(self, value):
+        self._robot = value
+
     @property
     def controller(self):
         return self._controller_obj
+
+    @controller.setter
+    def controller(self, value):
+        self._controller_obj = value
 
     @property
     def terrain(self):

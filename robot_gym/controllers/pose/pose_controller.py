@@ -10,6 +10,10 @@ class PoseController(Controller):
 
     MOTOR_CONTROL_MODE = simple_motor.MOTOR_CONTROL_POSITION
 
+    ACTION_HIGH = 0.
+
+    ACTION_DIM = 9
+
     def __init__(self, robot, get_time_since_reset):
         super(PoseController, self).__init__(robot, get_time_since_reset)
         self._arm_ctrl = arm_controller.ArmController(robot, get_time_since_reset)
@@ -22,7 +26,18 @@ class PoseController(Controller):
                                     [-self._constants.x_dist / 2, self._constants.y_dist / 2, -self._constants.height]])
 
     def update_controller_params(self, params):
-        self._position, self._orientation, arm_target = params
+        if len(params) == 9:
+            base_x, base_y, base_z, roll, pitch, yaw, x, y, z = params
+            self._position = np.array([base_x, base_y, base_z])
+            self._orientation = np.array([roll, pitch, yaw])
+            arm_target = (x, y, z), False
+        elif len(params) == 6:
+            base_x, base_y, base_z, roll, pitch, yaw = params
+            self._position = np.array([base_x, base_y, base_z])
+            self._orientation = np.array([roll, pitch, yaw])
+            arm_target = (0, 0, 0), True
+        else:
+            self._position, self._orientation, arm_target = params
         self._arm_ctrl.update_controller_params(arm_target)
 
     def setup_ui_params(self, pybullet_client):

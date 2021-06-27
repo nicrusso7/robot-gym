@@ -119,9 +119,9 @@ class RobotGymEnv(gym.Env, ABC):
         # self._sleep_at_reset()
         self.simulation.controller.update_controller_params(action)
         action = self.simulation.controller.get_action()
-        self._simulation.ApplyStepAction(action)
+        self.simulation.ApplyStepAction(action)
         if "update_equip" in kwargs:
-            self._simulation.robot.update_equipment()
+            self.simulation.robot.update_equipment()
         observation = self.get_observation()
         reward = self.reward()
         done, info = self.termination()
@@ -129,7 +129,7 @@ class RobotGymEnv(gym.Env, ABC):
         return np.array(observation), reward, done, info
 
     def render(self, mode="rgb_array", close=False):
-        return self._simulation.Render(mode)
+        return self.simulation.Render(mode)
 
     def _sleep_at_reset(self):
         if self._render:
