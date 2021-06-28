@@ -305,6 +305,9 @@ class Robot:
                 motor_ids.append(motor_id)
                 motor_torques.append(0)
         self._SetMotorTorqueByIds(motor_ids, motor_torques)
+        # TODO | call here the lower level real robot SDK.
+        # TODO | motor_ids is a list of the joints IDs (ordered as per URDF),
+        # TODO | motor_torques is the list of torques.
 
     def _SetMotorTorqueByIds(self, motor_ids, torques):
         self._pybullet_client.setJointMotorControlArray(

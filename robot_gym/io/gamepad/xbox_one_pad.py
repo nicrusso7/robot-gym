@@ -73,7 +73,9 @@ class XboxGamepad:
             self.wz = _interpolate(event.state, MAX_ABS_RX, self._vel_scale_rot)
 
         if self._lb_pressed and self._rb_pressed:
+            print("SECURITY STOP!")
             self.estop_flagged = True
+            # TODO implement security stop if using a real robot
             self.vx, self.vy, self.wz = 0., 0., 0.
 
     def get_command(self):

@@ -6,6 +6,7 @@ from robot_gym.controllers.pose import pose_controller
 from robot_gym.controllers.mpc import mpc_controller
 from robot_gym.core.simulation import Simulation
 from robot_gym.io.gamepad import xbox_one_pad
+from robot_gym.model.robots import simple_motor
 from robot_gym.model.robots.ghost import ghost
 from robot_gym.model.robots.k3lso import k3lso
 
@@ -22,7 +23,7 @@ class Playground:
             gamepad = xbox_one_pad.XboxGamepad()
             self._command_function = gamepad.get_command
         # create simulation
-        self._create_simulation(False, pybullet_client, robot_model, mark, self._current_ctrl, "random", None)
+        self._create_simulation(False, pybullet_client, robot_model, mark, self._current_ctrl, "plane", None)
 
     def _create_simulation(self, record_video, pybullet_client, robot_model,
                            mark, controller_class, terrain_type, terrain_id):
@@ -116,9 +117,9 @@ class Playground:
             action = self._sim.controller.get_action()
             # apply action to robot
             self._sim.ApplyStepAction(action)
-            # if self.is_falling():
-            #     # robot is falling down, reset the simulation.
-            #     self._reset(None)
+            if self.is_falling() and self._sim.controller.MOTOR_CONTROL_MODE is not simple_motor.MOTOR_CONTROL_POSITION:
+                # robot is falling down, reset the simulation.
+                self._reset(None)
             current_time = self._sim.GetTimeSinceReset()
             expected_duration = current_time - start_time_robot
             actual_duration = time.time() - start_time_wall

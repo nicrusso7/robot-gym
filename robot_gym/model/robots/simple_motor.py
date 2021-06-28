@@ -127,6 +127,7 @@ class RobotMotorModel:
             desired_motor_velocities = np.full(self._num_motors, 0)
         elif motor_control_mode is MOTOR_CONTROL_HYBRID:
             # The input should be a 60 dimension vector
+            motor_commands = motor_commands[0]
             assert len(motor_commands) == MOTOR_COMMAND_DIMENSION * self._num_motors
             kp = motor_commands[POSITION_GAIN_INDEX::MOTOR_COMMAND_DIMENSION]
             kd = motor_commands[VELOCITY_GAIN_INDEX::MOTOR_COMMAND_DIMENSION]
