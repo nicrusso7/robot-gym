@@ -157,12 +157,12 @@ class GibsonGymEnv(iGibsonEnv):
         self.load_miscellaneous_variables()
 
     def land(self, obj, pos, orn):
+        super().land(obj, pos, orn)
         self._base_sim.pybullet_client.resetBasePositionAndOrientation(
             self._base_sim.robot.GetRobotId,
             self._base_sim.robot.GetBasePosition(),
             self._base_sim.pybullet_client.getQuaternionFromEuler([0, 0, 0])
         )
-        super().land(obj, pos, orn)
         self._base_sim.robot.ResetPose()
         self._base_sim.pybullet_client.configureDebugVisualizer(self._base_sim.pybullet_client.COV_ENABLE_RENDERING,
                                                                 False)
@@ -171,8 +171,9 @@ class GibsonGymEnv(iGibsonEnv):
                                                                 True)
 
     def reset(self):
+        state = super().reset()
         self._base_sim.reset()
-        return super().reset()
+        return state
 
     def setup_action_space(self):
         action_high = self._base_sim.controller.ACTION_HIGH

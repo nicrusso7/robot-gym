@@ -1,3 +1,5 @@
+import logging
+
 import gym
 from gibson2.render.profiler import Profiler
 
@@ -43,10 +45,10 @@ def main():
             with Profiler('Environment action step'):
                 action = env.action_space.sample()
                 state, reward, done, info = env.step(action)
-                # if done:
-                #     logging.info(
-                #         "Episode finished after {} timesteps".format(i + 1))
-                #     break
+                if done:
+                    logging.info(
+                        "Episode finished after {} timesteps".format(i + 1))
+                    break
     env.close()
 
 
