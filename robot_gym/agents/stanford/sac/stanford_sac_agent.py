@@ -30,12 +30,7 @@ from __future__ import print_function
 import os
 import time
 
-from absl import app
-from absl import flags
-from absl import logging
-
 import gin
-import numpy as np
 import tensorflow as tf
 
 from tf_agents.agents.ddpg import critic_network
@@ -56,61 +51,6 @@ from tf_agents.policies import random_tf_policy
 from tf_agents.replay_buffers import tf_uniform_replay_buffer
 from tf_agents.utils import common
 
-flags.DEFINE_integer('num_iterations', 1000000,
-                     'Total number train/eval iterations to perform.')
-flags.DEFINE_integer('initial_collect_steps', 1000,
-                     'Number of steps to collect at the beginning of training using random policy')
-flags.DEFINE_integer('collect_steps_per_iteration', 1,
-                     'Number of steps to collect and be added to the replay buffer after every training iteration')
-flags.DEFINE_integer('num_parallel_environments', 1,
-                     'Number of environments to run in parallel')
-flags.DEFINE_integer('num_parallel_environments_eval', 1,
-                     'Number of environments to run in parallel for eval')
-flags.DEFINE_integer('replay_buffer_capacity', 1000000,
-                     'Replay buffer capacity per env.')
-flags.DEFINE_integer('train_steps_per_iteration', 1,
-                     'Number of training steps in every training iteration')
-flags.DEFINE_integer('batch_size', 256,
-                     'Batch size for each training step. '
-                     'For each training iteration, we first collect collect_steps_per_iteration steps to the '
-                     'replay buffer. Then we sample batch_size steps from the replay buffer and train the model'
-                     'for train_steps_per_iteration times.')
-flags.DEFINE_float('gamma', 0.99,
-                   'Discount_factor for the environment')
-flags.DEFINE_float('actor_learning_rate', 3e-4,
-                   'Actor learning rate')
-flags.DEFINE_float('critic_learning_rate', 3e-4,
-                   'Critic learning rate')
-flags.DEFINE_float('alpha_learning_rate', 3e-4,
-                   'Alpha learning rate')
-
-flags.DEFINE_integer('num_eval_episodes', 10,
-                     'The number of episodes to run eval on.')
-flags.DEFINE_integer('eval_interval', 10000,
-                     'Run eval every eval_interval train steps')
-flags.DEFINE_boolean('eval_only', False,
-                     'Whether to run evaluation only on trained checkpoints')
-flags.DEFINE_boolean('eval_deterministic', False,
-                     'Whether to run evaluation using a deterministic policy')
-
-
-# Added for Gibson
-flags.DEFINE_string('config_file', None,
-                    'Config file for the experiment.')
-flags.DEFINE_list('model_ids', None,
-                  'A comma-separated list of model ids to overwrite config_file.'
-                  'len(model_ids) == num_parallel_environments')
-flags.DEFINE_list('model_ids_eval', None,
-                  'A comma-separated list of model ids to overwrite config_file for eval.'
-                  'len(model_ids) == num_parallel_environments_eval')
-flags.DEFINE_string('env_mode', 'headless',
-                    'Mode for the simulator (gui or headless)')
-
-flags.DEFINE_boolean('random_position', False,
-                     'Whether to randomize initial and target position')
-
-FLAGS = flags.FLAGS
-
 
 @gin.configurable
 def normal_projection_net(action_spec,
@@ -129,11 +69,17 @@ def normal_projection_net(action_spec,
 @gin.configurable
 def train_eval(
         root_dir,
-        gpu=0,
+        env_class,
+        robot_model,
+        mark,
+        controller_class,
+        config,
+        render,
+        debug,
+        policy,
         env_load_fn=None,
         model_ids=None,
         reload_interval=None,
-        eval_env_mode='headless',
         num_iterations=1000000,
         conv_1d_layer_params=None,
         conv_2d_layer_params=None,
@@ -216,14 +162,28 @@ def train_eval(
             assert len(model_ids_eval) == num_parallel_environments_eval, \
                 'model ids eval provided, but length not equal to num_parallel_environments_eval'
 
-        tf_py_env = [lambda model_id=model_ids[i]: env_load_fn(model_id, 'headless', gpu)
+        tf_py_env = [lambda model_id=model_ids[i]: env_load_fn(env_class,
+                                                               robot_model,
+                                                               mark,
+                                                               controller_class,
+                                                               config,
+                                                               False,
+                                                               False,
+                                                               False)
                      for i in range(num_parallel_environments)]
         tf_env = tf_py_environment.TFPyEnvironment(
             parallel_py_environment.ParallelPyEnvironment(tf_py_env))
 
-        if eval_env_mode == 'gui':
+        if render:
             assert num_parallel_environments_eval == 1, 'only one GUI env is allowed'
-        eval_py_env = [lambda model_id=model_ids_eval[i]: env_load_fn(model_id, eval_env_mode, gpu)
+        eval_py_env = [lambda model_id=model_ids_eval[i]: env_load_fn(env_class,
+                                                                      robot_model,
+                                                                      mark,
+                                                                      controller_class,
+                                                                      config,
+                                                                      debug,
+                                                                      render,
+                                                                      policy)
                        for i in range(num_parallel_environments_eval)]
         eval_py_env = parallel_py_environment.ParallelPyEnvironment(
             eval_py_env)
@@ -441,17 +401,17 @@ def train_eval(
                     log=True,
                 )
                 # Run initial collect.
-                logging.info('Global step %d: Running initial collect op.',
-                             global_step_val)
+                print('Global step %d: Running initial collect op.',
+                      global_step_val)
                 sess.run(initial_collect_op)
 
                 # Checkpoint the initial replay buffer contents.
                 rb_checkpointer.save(global_step=global_step_val)
 
-                logging.info('Finished initial collect.')
+                print('Finished initial collect.')
             else:
-                logging.info('Global step %d: Skipping initial collect op.',
-                             global_step_val)
+                print('Global step %d: Skipping initial collect op.',
+                      global_step_val)
 
             collect_call = sess.make_callable(collect_op)
             train_step_call = sess.make_callable([train_op, summary_ops])
@@ -474,11 +434,11 @@ def train_eval(
                 time_acc += time.time() - start_time
                 global_step_val = global_step_call()
                 if global_step_val % log_interval == 0:
-                    logging.info('step = %d, loss = %f',
-                                 global_step_val, total_loss.loss)
+                    print('step = %d, loss = %f',
+                          global_step_val, total_loss.loss)
                     steps_per_sec = (global_step_val -
                                      timed_at_step) / time_acc
-                    logging.info('%.3f steps/sec', steps_per_sec)
+                    print('%.3f steps/sec', steps_per_sec)
                     sess.run(
                         steps_per_second_summary,
                         feed_dict={steps_per_second_ph: steps_per_sec})
@@ -507,4 +467,3 @@ def train_eval(
                     )
 
         sess.close()
-

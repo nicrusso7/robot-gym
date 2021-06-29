@@ -1,24 +1,19 @@
 # scene
 scene: stadium
-#scene: igibson
-#scene_id: Rs_int
 build_graph: true
 load_texture: true
 pybullet_load_texture: true
 trav_map_type: no_obj
 trav_map_resolution: 0.1
-trav_map_erosion: 3
+trav_map_erosion: 2
 should_open_all_doors: true
 
 # domain randomization
 texture_randomization_freq: null
 object_randomization_freq: null
 
-# robot
-robot: ""
-
 # task
-task: reaching_random
+task: point_nav_random
 target_dist_min: 1.0
 target_dist_max: 10.0
 goal_format: polar
@@ -45,15 +40,15 @@ collision_ignore_link_a_ids: []  # ignore collisions with these robot links
 # sensor spec
 output: [task_obs, rgb, depth, scan]
 # image
-# Primesense Carmine 1.09 short-range RGBD sensor
-# http://xtionprolive.com/primesense-carmine-1.09
+# ASUS Xtion PRO LIVE
+# https://www.asus.com/us/3D-Sensor/Xtion_PRO_LIVE
 fisheye: false
-image_width: 128
-image_height: 128
-vertical_fov: 90
+image_width: 160
+image_height: 120
+vertical_fov: 45
 # depth
-depth_low: 0.35
-depth_high: 3.0
+depth_low: 0.8
+depth_high: 3.5
 # scan
 # SICK TIM571 scanning range finder
 # https://docs.fetchrobotics.com/robot_hardware.html

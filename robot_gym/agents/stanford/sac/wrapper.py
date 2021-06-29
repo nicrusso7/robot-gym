@@ -13,29 +13,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import gin
 
 from tf_agents.environments import gym_wrapper
 from tf_agents.environments import wrappers
-import gibson2
-
-from robot_gym.gym.gibson_gym_env import GibsonGymEnv
 
 
 @gin.configurable
-def load(robot_model,
+def load(env_class,
+         robot_model,
          mark,
          controller_class,
          config,
+         debug,
+         render,
+         policy,
          gym_env_wrappers=(),
          env_wrappers=(),
          spec_dtype_map=None):
 
-    env = GibsonGymEnv(robot_model,
-                       mark,
-                       controller_class,
-                       config)
+    env = env_class(robot_model,
+                    mark,
+                    controller_class,
+                    config,
+                    debug,
+                    policy,
+                    render)
 
     discount = env.config.get('discount_factor', 0.99)
     max_episode_steps = env.config.get('max_step', 500)

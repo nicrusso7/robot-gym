@@ -10,4 +10,56 @@ gpu_c: 0
 # GPU id for graphics, e.g. Gibson.
 gpu_g: 0
 
-#
+# Total number train/eval iterations to perform.
+num_iterations: 1000000
+
+# Number of steps to collect at the beginning of training using random policy
+initial_collect_steps: 500
+
+# Number of steps to collect and be added to the replay buffer after every training iteration
+collect_steps_per_iteration: 1
+
+# Number of environments to run in parallel
+num_parallel_environments: 1
+
+# Number of environments to run in parallel for eval
+num_parallel_environments_eval: 1
+
+# Replay buffer capacity per env.
+replay_buffer_capacity: 10000
+
+# Number of training steps in every training iteration
+train_steps_per_iteration: 1
+
+# Batch size for each training step.
+# For each training iteration, we first collect collect_steps_per_iteration steps to the
+# replay buffer. Then we sample batch_size steps from the replay buffer and train the model
+# for train_steps_per_iteration times.
+batch_size: 256
+
+# Discount_factor for the environment
+gamma: 0.99
+
+# Actor learning rate
+actor_learning_rate: 3e-4
+
+# Critic learning rate
+critic_learning_rate: 3e-4
+
+# Alpha learning rate
+alpha_learning_rate: 3e-4
+
+# The number of episodes to run eval on
+num_eval_episodes: 10
+
+# Run eval every eval_interval train steps
+eval_interval: 10000000
+
+# Whether to run evaluation only on trained checkpoints
+eval_only: False
+
+# Whether to run evaluation using a deterministic policy
+eval_deterministic: False
+
+# Whether to randomize initial and target position
+random_position: False

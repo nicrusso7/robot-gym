@@ -50,6 +50,7 @@ class GibsonGymEnv(iGibsonEnv):
         return ui
 
     def step(self, action):
+        print(f"action={action}")
         if self._debug and not self._base_sim.read_ui_parameters(self._ui) and not self._run_policy:
             # overwrite agent action with UI input
             action = self._read_inputs()

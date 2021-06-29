@@ -27,7 +27,7 @@ class ReachEnv(GibsonGymEnv):
         super(ReachEnv, self).__init__(robot_model, mark, controller_class, config, debug, policy, render)
 
     def setup_action_space(self):
-        action_high = 0.5
+        action_high = 0.4
         action_dim = 2
         self._base_sim.robot.action_high = np.array([action_high] * action_dim)
         self._base_sim.robot.action_low = -self._base_sim.robot.action_high
