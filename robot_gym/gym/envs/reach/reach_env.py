@@ -46,7 +46,7 @@ def main():
                 action = env.action_space.sample()
                 state, reward, done, info = env.step(action)
                 if done:
-                    logging.info(
+                    print(
                         "Episode finished after {} timesteps".format(i + 1))
                     break
     env.close()

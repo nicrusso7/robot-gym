@@ -10,6 +10,7 @@ from robot_gym.agents.ddpg import simple_ddpg_agent, constants
 class DDPG(Agent):
 
     def train(self):
+        # TODO replace static env name
         env = gym.make("GoTo-v0", **self._env_args)
         timestamp = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
         full_logdir = os.path.expanduser(os.path.join(self._log_dir, '{}-{}'.format(timestamp, self._env_id)))

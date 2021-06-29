@@ -1,0 +1,13 @@
+# Path to the gin config files.
+gin_file: None
+
+# Gin binding to pass through.
+gin_param: None
+
+# GPU id for compute, e.g. Tensorflow.
+gpu_c: 0
+
+# GPU id for graphics, e.g. Gibson.
+gpu_g: 0
+
+#
