@@ -100,4 +100,4 @@ def train(log_dir,
 
 if __name__ == '__main__':
     train("~/dev/robotics/playground/sac", reach_env.ReachEnv, ghost.Ghost, "1", mpc_controller.MPCController,
-          os.path.join(os.path.dirname(reach.__file__), "reach.yaml"), True, True, True)
+          os.path.join(os.path.dirname(reach.__file__), "reach.yaml"), True, True, False)

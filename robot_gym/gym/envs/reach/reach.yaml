@@ -1,5 +1,7 @@
 # scene
-scene: stadium
+#scene: stadium
+scene: igibson
+scene_id: Rs_int
 build_graph: true
 load_texture: true
 pybullet_load_texture: true
@@ -34,7 +36,7 @@ max_step: 500
 max_collisions_allowed: 500
 
 # misc config
-initial_pos_z_offset: 0.001 # z offset is already given during model setup, set a low number here.
+initial_pos_z_offset: 0.12 # z offset is already given during model setup, set a low number here.
 collision_ignore_link_a_ids: []  # ignore collisions with these robot links
 
 # sensor spec
