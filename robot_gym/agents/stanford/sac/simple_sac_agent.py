@@ -24,7 +24,7 @@ def train(log_dir,
           render,
           debug,
           policy):
-    base_config = parse_config("base_config.yaml")
+    base_config = parse_config(os.path.join(os.path.dirname(__file__), "base_config.yaml"))
     tf.compat.v1.enable_resource_variables()
     logging.set_verbosity(logging.INFO)
     # TODO read gin files (if any) from config
@@ -86,11 +86,11 @@ def train(log_dir,
         num_parallel_environments=base_config["num_parallel_environments"],
         replay_buffer_capacity=base_config["replay_buffer_capacity"],
         train_steps_per_iteration=base_config["train_steps_per_iteration"],
-        batch_size=base_config["batch_size"],
-        actor_learning_rate=base_config["actor_learning_rate"],
-        critic_learning_rate=base_config["critic_learning_rate"],
-        alpha_learning_rate=base_config["alpha_learning_rate"],
-        gamma=base_config["gamma"],
+        batch_size=256,
+        actor_learning_rate=3e-4,
+        critic_learning_rate=3e-4,
+        alpha_learning_rate=3e-4,
+        gamma=0.99,
         num_eval_episodes=base_config["num_eval_episodes"],
         eval_interval=base_config["eval_interval"],
         eval_only=base_config["eval_only"],
@@ -100,4 +100,4 @@ def train(log_dir,
 
 if __name__ == '__main__':
     train("~/dev/robotics/playground/sac", reach_env.ReachEnv, ghost.Ghost, "1", mpc_controller.MPCController,
-          os.path.join(os.path.dirname(reach.__file__), "reach.yaml"), True, True, False)
+          os.path.join(os.path.dirname(reach.__file__), "reach.yaml"), False, True, True)

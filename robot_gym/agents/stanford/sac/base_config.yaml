@@ -1,8 +1,8 @@
 # Path to the gin config files.
-gin_file: None
+gin_file: null
 
 # Gin binding to pass through.
-gin_param: None
+gin_param: null
 
 # GPU id for compute, e.g. Tensorflow.
 gpu_c: 0

@@ -28,7 +28,7 @@ class ReachEnv(GibsonGymEnv):
 
     def setup_action_space(self):
         action_high = 0.4
-        action_dim = 2
+        action_dim = 1
         self._base_sim.robot.action_high = np.array([action_high] * action_dim)
         self._base_sim.robot.action_low = -self._base_sim.robot.action_high
         self._base_sim.robot.action_space = gym.spaces.Box(shape=(action_dim,),

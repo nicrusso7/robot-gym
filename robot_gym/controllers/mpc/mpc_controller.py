@@ -88,6 +88,10 @@ class MPCController(Controller):
         if len(params) == 2:
             vx, wz = params
             vy = 0.
+        elif len(params) == 1:
+            wz = params
+            vx = 0.3
+            vy = 0.
         else:
             vx, vy, wz = params
         # add robot ctrl offset

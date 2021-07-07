@@ -169,7 +169,7 @@ def train_eval(
                                                                config,
                                                                False,
                                                                False,
-                                                               False)
+                                                               True)
                      for i in range(num_parallel_environments)]
         tf_env = tf_py_environment.TFPyEnvironment(
             parallel_py_environment.ParallelPyEnvironment(tf_py_env))

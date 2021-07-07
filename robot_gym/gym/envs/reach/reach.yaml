@@ -1,7 +1,7 @@
 # scene
-#scene: stadium
-scene: igibson
-scene_id: Rs_int
+scene: stadium
+#scene: igibson
+#scene_id: Rs_int
 build_graph: true
 load_texture: true
 pybullet_load_texture: true
@@ -32,8 +32,8 @@ discount_factor: 0.99
 
 # termination condition
 dist_tol: 0.36  # body width
-max_step: 500
-max_collisions_allowed: 500
+max_step: 1500
+max_collisions_allowed: 1500
 
 # misc config
 initial_pos_z_offset: 0.12 # z offset is already given during model setup, set a low number here.
