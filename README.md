@@ -36,3 +36,15 @@ Notes for shapely
 
 ``conda install shapely``
 
+
+
+#Notes
+
+``In robot-gym/robot_gym/model/robots/simple_motor.py``
+The ``(motor_commands)`` on line 133 outputs a 60 dimension vector (q, qdot, kp, kd, tau) = (Postion, velocities, PID gains, motor torque) for each motor. 
+
+
+
+
+
+
