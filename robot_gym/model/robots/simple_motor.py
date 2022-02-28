@@ -139,6 +139,25 @@ class RobotMotorModel:
         motor_torques = -1 * (kp * (motor_angle - desired_motor_angles)) - kd * (
                 motor_velocity - desired_motor_velocities) + additional_torques
         motor_torques = self._strength_ratios * motor_torques
+                #Debug output (q, qdot, kp, kd, tau) (Postion, velocities, PID gains, motor torque)
+
+        print("q")
+        print(desired_motor_angles)
+        print(" ")
+        print("qdot")
+        print(motor_velocity)
+        print(" ")
+        print("kp")
+        print(kp)
+        print(" ")
+        print(kd)
+        print(" ")
+        print("tau")
+        print(motor_torques)
+        print(" ")
+        print(" ")
+        print(" ")
+        
         if self._torque_limits is not None:
             if len(self._torque_limits) != len(motor_torques):
                 raise ValueError(

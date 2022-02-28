@@ -88,6 +88,13 @@
     </collision>
   </link>
   <link name="toe_hr_1">
+    <contact>
+      <friction_anchor/>
+      <stiffness value="30000.0"/>
+      <damping value="1000.0"/>
+      <spinning_friction value="0.1"/>
+      <lateral_friction value="1.0"/>
+    </contact>
     <inertial>
       <origin rpy="0 0 0" xyz="0.00458667149031633 -0.006500081766649929 0.010312470108147176"/>
       <mass value="0.03759501582149149"/>
@@ -168,6 +175,13 @@
     </collision>
   </link>
   <link name="toe_hr_2">
+    <contact>
+      <friction_anchor/>
+      <stiffness value="30000.0"/>
+      <damping value="1000.0"/>
+      <spinning_friction value="0.1"/>
+      <lateral_friction value="1.0"/>
+    </contact>
     <inertial>
       <origin rpy="0 0 0" xyz="0.004586648204496224 0.006500092995548129 0.01031246157189547"/>
       <mass value="0.03759501582149149"/>
@@ -248,6 +262,13 @@
     </collision>
   </link>
   <link name="toe_hr_3">
+    <contact>
+      <friction_anchor/>
+      <stiffness value="30000.0"/>
+      <damping value="1000.0"/>
+      <spinning_friction value="0.1"/>
+      <lateral_friction value="1.0"/>
+    </contact>
     <inertial>
       <origin rpy="0 0 0" xyz="0.004586825372773412 -0.006500081766651011 0.010312470108151173"/>
       <mass value="0.03759501582149149"/>
@@ -328,6 +349,13 @@
     </collision>
   </link>
   <link name="toe_hr_4">
+    <contact>
+      <friction_anchor/>
+      <stiffness value="30000.0"/>
+      <damping value="1000.0"/>
+      <spinning_friction value="0.1"/>
+      <lateral_friction value="1.0"/>
+    </contact>
     <inertial>
       <origin rpy="0 0 0" xyz="0.00458680208695289 0.006500092995547518 0.010312461571901133"/>
       <mass value="0.03759501582149149"/>
@@ -352,92 +380,120 @@
     <parent link="base_link"/>
     <child link="abduct_fr_1"/>
     <axis xyz="1.0 0.0 -0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="abduct_fr_to_thigh_fr_j" type="continuous">
     <origin rpy="0 0 0" xyz="0.05792 -0.031937 -0.000366"/>
     <parent link="abduct_fr_1"/>
     <child link="thigh_hr_1"/>
     <axis xyz="-0.0 1.0 -0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="thigh_fr_to_knee_fr_j" type="continuous">
     <origin rpy="0 0 0" xyz="0.000114 -0.10152 -0.279885"/>
     <parent link="thigh_hr_1"/>
     <child link="shank_hl_1"/>
     <axis xyz="-0.0 1.0 0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="fr_joint_toe" type="fixed">
     <origin rpy="0 0 0" xyz="0.002252 0.0177 -0.272251"/>
     <parent link="shank_hl_1"/>
     <child link="toe_hr_1"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <joint name="torso_to_abduct_fl_j" type="continuous">
     <origin rpy="0 0 0" xyz="0.1873 0.055 -0.000895"/>
     <parent link="base_link"/>
     <child link="abduct_fl_1"/>
     <axis xyz="-1.0 -0.0 0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="abduct_fl_to_thigh_fl_j" type="continuous">
     <origin rpy="0 0 0" xyz="0.05792 0.031937 -0.000366"/>
     <parent link="abduct_fl_1"/>
     <child link="thigh_hl_1"/>
     <axis xyz="0.0 1.0 0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="thigh_fl_to_knee_fl_j" type="continuous">
     <origin rpy="0 0 0" xyz="-0.000914 0.10152 -0.27875"/>
     <parent link="thigh_hl_1"/>
     <child link="shank_hl_2"/>
     <axis xyz="-0.0 -1.0 -0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="fl_joint_toe" type="fixed">
     <origin rpy="0 0 0" xyz="0.002252 -0.0177 -0.272251"/>
     <parent link="shank_hl_2"/>
     <child link="toe_hr_2"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <joint name="torso_to_abduct_hr_j" type="continuous">
     <origin rpy="0 0 0" xyz="-0.1873 -0.055 -0.000895"/>
     <parent link="base_link"/>
     <child link="abduct_hr_1"/>
     <axis xyz="1.0 0.0 -0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="abduct_hr_to_thigh_hr_j" type="continuous">
     <origin rpy="0 0 0" xyz="-0.05792 -0.031937 -0.000366"/>
     <parent link="abduct_hr_1"/>
     <child link="thigh_hr_2"/>
     <axis xyz="-0.0 -1.0 0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="thigh_hr_to_knee_hr_j" type="continuous">
     <origin rpy="0 0 0" xyz="0.000115 -0.10152 -0.279885"/>
     <parent link="thigh_hr_2"/>
     <child link="shank_hl_3"/>
     <axis xyz="-0.0 1.0 0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="hr_joint_toe" type="fixed">
     <origin rpy="0 0 0" xyz="0.002251 0.0177 -0.272251"/>
     <parent link="shank_hl_3"/>
     <child link="toe_hr_3"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <joint name="torso_to_abduct_hl_j" type="continuous">
     <origin rpy="0 0 0" xyz="-0.1873 0.055 -0.000895"/>
     <parent link="base_link"/>
     <child link="abduct_hl_1"/>
     <axis xyz="-1.0 -0.0 0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="abduct_hl_to_thigh_hl_j" type="continuous">
     <origin rpy="0 0 0" xyz="-0.05792 0.031937 -0.000366"/>
     <parent link="abduct_hl_1"/>
     <child link="thigh_hl_2"/>
     <axis xyz="0.0 -1.0 -0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="thigh_hl_to_knee_hl_j" type="continuous">
     <origin rpy="0 0 0" xyz="-0.000913 0.10152 -0.27875"/>
     <parent link="thigh_hl_2"/>
     <child link="shank_hl_4"/>
     <axis xyz="-0.0 -1.0 -0.0"/>
+    <limit effort="54" velocity="100"/>
+    <joint_properties damping=".0" friction=".0"/>
   </joint>
   <joint name="hl_joint_toe" type="fixed">
     <origin rpy="0 0 0" xyz="0.002251 -0.0177 -0.272251"/>
     <parent link="shank_hl_4"/>
     <child link="toe_hr_4"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
 </robot>
 
